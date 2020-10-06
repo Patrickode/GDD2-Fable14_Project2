@@ -21,10 +21,17 @@ public class TilemapMovement
         return !floor.HasTile(gridPosition) || colliders.HasTile(gridPosition);
     }
 
-    public void Move(Transform agent, Vector2 direction)
+    // Moves the agent.
+    // Returns if a move occurred.
+    public bool Move(Transform agent, Vector2 direction)
     {
         Vector3 newPosition = agent.position + (Vector3)direction;
         if (!IsCollision(newPosition))
+        {
             agent.position = newPosition;
+            return true;
+        }
+
+        return false;
     }
 }

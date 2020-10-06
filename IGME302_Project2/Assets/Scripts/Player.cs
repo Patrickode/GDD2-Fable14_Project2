@@ -1,19 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(TargetFollower))]
 public class Player : MonoBehaviour, IMovable
 {
     [SerializeField]
-    Tilemap floor;
+    private Tilemap floor = null;
     [SerializeField]
-    Tilemap colliders;
+    private Tilemap colliders = null;
 
     private Transform target;
 
-    private PlayerControls controls;
-    private TilemapMovement tilemapMover;
-    
+    private PlayerControls controls = null;
+    private TilemapMovement tilemapMover = null;
+
+    public Action OnMove;
 
     void OnEnable()
     {
@@ -41,7 +43,8 @@ public class Player : MonoBehaviour, IMovable
 
     public void Move(Vector2 direction)
     {
-        tilemapMover.Move(target, direction);
+        if (tilemapMover.Move(target, direction))
+            OnMove?.Invoke();
     }
 
     // Handles TargetFollower logic
