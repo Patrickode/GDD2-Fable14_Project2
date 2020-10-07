@@ -32,7 +32,7 @@ public class Player : MonoBehaviour, IMovable
 
         controls = new PlayerControls();
         tileMoveController = new TilemapMovementController(target.transform, currentLevel);
-        OnMove = tileMoveController.OnMove;
+        tileMoveController.OnMove += () => OnMove?.Invoke();
 
         // Events
         controls.Movement.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());

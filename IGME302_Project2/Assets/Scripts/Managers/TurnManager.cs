@@ -19,7 +19,6 @@ public class TurnManager : MonoBehaviour
     private void IncreaseTurn()
     {
         turnCount++;
-        Debug.Log("Turn:" + (turnCount + 1));
     }
 
     private void ResetTurns()
