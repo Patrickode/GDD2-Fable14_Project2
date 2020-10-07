@@ -18,12 +18,18 @@ public class LevelManager : MonoBehaviour
             grid = GameObject.FindGameObjectWithTag("Grid")?.transform;
     }
 
+    private void Start()
+    {
+        Load("TestLevel");
+    }
+
     public void Load(string levelName)
     {
         GameObject loadedLevelObject = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Levels/" + levelName + ".prefab"));
         Level loadedLevel = loadedLevelObject.GetComponent<Level>();
         loadedLevel.Load();
         loadedLevel.transform.parent = grid;
+        loadedLevel.transform.position = loadedLevel.transform.parent.position;
 
         // Unload currentLevel if there is any
         if (currentLevel != null)
@@ -39,5 +45,7 @@ public class LevelManager : MonoBehaviour
         GameObject newLevelPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/NewLevel.prefab");
         GameObject newLevel = Instantiate(newLevelPrefab, Vector2.zero, Quaternion.identity);
         newLevel.name = "New Level";
+        Transform grid = GameObject.FindGameObjectWithTag("Grid")?.transform;
+        newLevel.transform.parent = grid;
     }
 }
