@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.InputSystem;
 
 public class LevelManager : MonoBehaviour
 {
@@ -20,7 +21,23 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        // For Testing Purposes Load the Test Level on Start
+        // To be removed once main menu and first real level is implemented
         Load("TestLevel");
+    }
+
+    private void Update()
+    {
+        // For testing level change
+        Keyboard keyboard = InputSystem.GetDevice<Keyboard>();
+
+        if (keyboard.nKey.wasPressedThisFrame)
+        {
+            if (currentLevel.levelData.name == "TestLevel")
+                Load("TestLevel2");
+            else if (currentLevel.levelData.name == "TestLevel2")
+                Load("TestLevel");
+        }
     }
 
     public void Load(string levelName)
@@ -33,7 +50,7 @@ public class LevelManager : MonoBehaviour
 
         // Unload currentLevel if there is any
         if (currentLevel != null)
-            Destroy(currentLevel);
+            Destroy(currentLevel.gameObject);
 
         currentLevel = loadedLevel;
         OnLoaded?.Invoke(loadedLevel);
@@ -47,5 +64,6 @@ public class LevelManager : MonoBehaviour
         newLevel.name = "New Level";
         Transform grid = GameObject.FindGameObjectWithTag("Grid")?.transform;
         newLevel.transform.parent = grid;
+        newLevel.transform.position = newLevel.transform.parent.position;
     }
 }
