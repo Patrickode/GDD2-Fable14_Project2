@@ -7,7 +7,7 @@ public class TurnManager : MonoBehaviour
     Action OnTurnEnd;
 
     [SerializeField]
-    private Player player;
+    private Player player = null;
 
     void Start()
     {
@@ -19,6 +19,7 @@ public class TurnManager : MonoBehaviour
     private void IncreaseTurn()
     {
         turnCount++;
+        Debug.Log("Turn:" + (turnCount + 1));
     }
 
     private void ResetTurns()

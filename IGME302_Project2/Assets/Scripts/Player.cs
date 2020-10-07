@@ -1,19 +1,15 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Tilemaps;
+﻿using UnityEngine;
+using System;
+using System.Linq;
 
 [RequireComponent(typeof(TargetFollower))]
 public class Player : MonoBehaviour, IMovable
 {
-    [SerializeField]
-    private Tilemap floor = null;
-    [SerializeField]
-    private Tilemap colliders = null;
+    private PlayerControls controls;
+    private TilemapMovementController tileMoveController;
 
-    private Transform target;
-
-    private PlayerControls controls = null;
-    private TilemapMovement tilemapMover = null;
+    public Level currentLevel;
+    public Transform target;
 
     public Action OnMove;
 
@@ -29,43 +25,33 @@ public class Player : MonoBehaviour, IMovable
 
     void Awake()
     {
+        if (target == null)
+        {
+            target = transform.Cast<Transform>().ToList().Find(t => t.tag == "FollowTarget");
+        }
+
         controls = new PlayerControls();
-        tilemapMover = new TilemapMovement(floor, colliders);
+        tileMoveController = new TilemapMovementController(target.transform, currentLevel);
+        OnMove = tileMoveController.OnMove;
 
         // Events
         controls.Movement.Move.performed += ctx => Move(ctx.ReadValue<Vector2>());
     }
 
-    void Start()
+    public void Move(Vector2 displacement)
     {
-        InitTarget();
+        if (target != null)
+        {
+            tileMoveController.Move(displacement);
+        }
     }
 
-    public void Move(Vector2 direction)
+    public void MoveTo(Vector2 position)
     {
-        if (tilemapMover.Move(target, direction))
-            OnMove?.Invoke();
-    }
-
-    // Handles TargetFollower logic
-    private void InitTarget()
-    {
-        TargetFollower follower = GetComponent<TargetFollower>();
-        if (follower.target != null)
+        if (!tileMoveController.IsCollision(position))
         {
-            target = GetComponent<TargetFollower>().target;
+            transform.position = (Vector3)position;
+            tileMoveController.MoveTo(position);
         }
-        else
-        {
-            Transform potentialTarget = transform.Find("PlayerTarget");
-            if (potentialTarget != null)
-            {
-                follower.target = potentialTarget;
-                target = potentialTarget;
-            }
-        }
-
-        // Move the target to the player's starting position
-        target.position = transform.position;
     }
 }
