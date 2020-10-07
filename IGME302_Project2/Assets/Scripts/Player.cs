@@ -8,7 +8,16 @@ public class Player : MonoBehaviour, IMovable
     private PlayerControls controls;
     private TilemapMovementController tileMoveController;
 
-    public Level currentLevel;
+    private Level currentLevel;
+    public Level CurrentLevel
+    {
+        get => currentLevel;
+        set
+        {
+            currentLevel = value;
+            tileMoveController.ChangeLevel(currentLevel);
+        }
+    }
     public Transform target;
 
     public Action OnMove;

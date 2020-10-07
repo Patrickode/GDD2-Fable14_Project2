@@ -7,10 +7,13 @@ public class TurnManager : MonoBehaviour
     Action OnTurnEnd;
 
     [SerializeField]
-    private Player player = null;
+    private Player player;
 
     void Start()
     {
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+
         turnCount = 0;
         player.OnMove += () => OnTurnEnd?.Invoke();
         OnTurnEnd += IncreaseTurn;
