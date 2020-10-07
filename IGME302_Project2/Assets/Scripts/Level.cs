@@ -34,7 +34,10 @@ public class Level : MonoBehaviour
         if (colliders == null)
             colliders = children.Find(child => child.tag == "ColliderTilemap")?.GetComponent<Tilemap>();
         if (ceiling == null)
+        {
             ceiling = children.Find(child => child.tag == "CeilingTilemap")?.GetComponent<Tilemap>();
+            Debug.Log(ceiling);
+        }
     }
 }
 

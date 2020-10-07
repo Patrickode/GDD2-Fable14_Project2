@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 3963901014480616021}
   - component: {fileID: 9172843125171770989}
   m_Layer: 0
-  m_Name: New Level
+  m_Name: NewLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,7 +166,7 @@ MonoBehaviour:
   levelData: {fileID: 0}
   floor: {fileID: 3412724112638473122}
   colliders: {fileID: 1204514152340869291}
-  ceiling: {fileID: 0}
+  ceiling: {fileID: 5023795328622238825}
 --- !u!1 &6578007295807528998
 GameObject:
   m_ObjectHideFlags: 0

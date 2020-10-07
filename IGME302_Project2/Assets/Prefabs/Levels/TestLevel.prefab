@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c49f5f6e30cb464e9a93b6b6b47d331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData: {fileID: 0}
+  levelData: {fileID: 11400000, guid: 41c3ed2a3f2321846933ff1e44a219f6, type: 2}
   floor: {fileID: 6089278167866870075}
   colliders: {fileID: 6089278169036178701}
   ceiling: {fileID: 6089278169000243569}
