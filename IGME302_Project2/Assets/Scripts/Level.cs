@@ -30,12 +30,12 @@ public class Level : MonoBehaviour
     {
         List<Transform> children = transform.Cast<Transform>().ToList();
         if (floor == null)
-            floor = children.Find(child => child.tag == "FloorTilemap")?.GetComponent<Tilemap>();
+            floor = children.Find(child => child.CompareTag("FloorTilemap"))?.GetComponent<Tilemap>();
         if (colliders == null)
-            colliders = children.Find(child => child.tag == "ColliderTilemap")?.GetComponent<Tilemap>();
+            colliders = children.Find(child => child.CompareTag("ColliderTilemap"))?.GetComponent<Tilemap>();
         if (ceiling == null)
         {
-            ceiling = children.Find(child => child.tag == "CeilingTilemap")?.GetComponent<Tilemap>();
+            ceiling = children.Find(child => child.CompareTag("CeilingTilemap"))?.GetComponent<Tilemap>();
             Debug.Log(ceiling);
         }
     }

@@ -9,7 +9,7 @@ public class TilemapMovementController : IMovable
     private Point position;
 
     public Point Position => position;
-    
+
 
     public Action OnMove;
 
@@ -17,7 +17,7 @@ public class TilemapMovementController : IMovable
     /// Constructor for a new Tilemap Movement Controller.
     /// </summary>
     /// <param name="agent">Object that will be moved along the tilemap.</param>
-    /// <param name="leve">Level the controller will use to calculate movement.</param>
+    /// <param name="level">Level the controller will use to calculate movement.</param>
     public TilemapMovementController(Transform agent, Level level)
     {
         this.agent = agent;
@@ -40,8 +40,10 @@ public class TilemapMovementController : IMovable
         return !level.floor.HasTile(gridPosition) || level.colliders.HasTile(gridPosition);
     }
 
-    // Tries to move the agent.
-    // Invokes OnMove method if successful.
+    /// <summary>
+    /// Tries to move the agent by an amount of displacement. Invokes OnMove method if successful.
+    /// </summary>
+    /// <param name="displacement">Which direction and how far to try and move.</param>
     public void Move(Vector2 displacement)
     {
         Vector3 newPosition = agent.position + (Vector3)displacement;
@@ -53,6 +55,10 @@ public class TilemapMovementController : IMovable
         }
     }
 
+    /// <summary>
+    /// Tries to move to a specific location.
+    /// </summary>
+    /// <param name="position">The position to try and move to.</param>
     public void MoveTo(Vector2 position)
     {
         if (!IsCollision(position))

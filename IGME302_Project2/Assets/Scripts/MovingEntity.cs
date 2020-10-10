@@ -24,13 +24,17 @@ public class MovingEntity : MonoBehaviour, IMovable
     {
         if (target == null)
         {
-            target = transform.Cast<Transform>().ToList().Find(t => t.tag == "FollowTarget");
+            target = transform.Cast<Transform>().ToList().Find(t => t.CompareTag("FollowTarget"));
         }
 
         tileMoveController = new TilemapMovementController(target.transform, currentLevel);
         tileMoveController.OnMove += () => OnMove?.Invoke();
     }
 
+    /// <summary>
+    /// Try to move by a given amount.
+    /// </summary>
+    /// <param name="displacement">The amount and direction to try and move in.</param>
     public virtual void Move(Vector2 displacement)
     {
         if (target != null)
@@ -39,6 +43,10 @@ public class MovingEntity : MonoBehaviour, IMovable
         }
     }
 
+    /// <summary>
+    /// Try to move to a specific location.
+    /// </summary>
+    /// <param name="position">The position to try and move to.</param>
     public virtual void MoveTo(Vector2 position)
     {
         if (!tileMoveController.IsCollision(position))

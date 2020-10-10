@@ -42,7 +42,9 @@ public class LevelManager : MonoBehaviour
 
     public void Load(string levelName)
     {
-        GameObject loadedLevelObject = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Levels/" + levelName + ".prefab"));
+        GameObject loadedLevelObject = Instantiate(
+            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Levels/" + levelName + ".prefab")
+        );
         Level loadedLevel = loadedLevelObject.GetComponent<Level>();
         loadedLevel.Load();
         loadedLevel.transform.parent = grid;
