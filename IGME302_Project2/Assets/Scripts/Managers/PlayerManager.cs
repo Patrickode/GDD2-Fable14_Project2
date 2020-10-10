@@ -11,17 +11,17 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         // Automatically set fields
-        if (player == null)
+        if (!player)
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        if (levelManager == null)
+        if (!levelManager)
             levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 
         // Attach level to player every time it is changed
-        if (levelManager != null)
+        if (levelManager)
         {
             levelManager.OnLoaded += loadedLevel =>
             {
-                if (player != null)
+                if (player)
                     player.CurrentLevel = loadedLevel;
             };
         }
