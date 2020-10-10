@@ -1348,10 +1348,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelName: Test Level 2
-  description: A second test level to  test transitions
+  description: A second test level to test transitions
   floor: {fileID: 2797234805336690471}
   colliders: {fileID: 6252081438338382670}
   ceiling: {fileID: 4627052580670354577}
+  abilitySet:
+  - ability: {fileID: 7695918135677045314, guid: a3a6acc42f37a7044998c3743a1c6188,
+      type: 3}
+    usages: 2
   spawnPoint: {x: -3, y: -1}
   goal: {x: 5, y: 0}
   nextLevel: {fileID: 4693217797826068182, guid: be931d8161b641a419e45e58134b12f7,
