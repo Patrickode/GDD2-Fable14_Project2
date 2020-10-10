@@ -26,6 +26,8 @@ public class PlayerManager : MonoBehaviour
 
                 // Spawn player at the level's spawn point
                 player.MoveTo(loadedLevel.spawnPoint);
+                //Set/Reset the player's abilities
+                player.SetAbilities(loadedLevel.abilitySet);
             };
         }
 

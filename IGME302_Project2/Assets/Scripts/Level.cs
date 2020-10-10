@@ -9,11 +9,15 @@ public class Level : MonoBehaviour
     // Text that would play out at the beginning of each level
     // As flavor text/introduction
     public string levelName;
-    public string description;
+    [TextArea] public string description;
 
     public Tilemap floor;
     public Tilemap colliders;
     public Tilemap ceiling;
+
+    [Space(10)]
+    public AbilityInstance[] abilitySet;
+    [Space(10)]
 
     public Vector2Int spawnPoint;
     public Vector2Int goal;
@@ -25,6 +29,23 @@ public class Level : MonoBehaviour
     public void Awake()
     {
         OnLoad += SetLevelTilemap;
+
+        if (abilitySet.Length < 1)
+        {
+            Debug.LogWarning($"{levelName}: No abilities are assigned; the player can only move. Did you " +
+                $"forget to set up {levelName}'s ability set?");
+        }
+        else
+        {
+            for (int i = 0; i < abilitySet.Length; i++)
+            {
+                if (!abilitySet[i].ability)
+                {
+                    Debug.LogError($"{levelName}: Ability at playerAbilities[{i}] isn't assigned! Make sure to " +
+                        $"assign an ability to each index of {levelName}'s ability set.");
+                }
+            }
+        }
     }
 
     public void Load()
