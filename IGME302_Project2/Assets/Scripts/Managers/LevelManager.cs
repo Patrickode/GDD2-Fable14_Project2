@@ -33,9 +33,9 @@ public class LevelManager : MonoBehaviour
 
         if (keyboard.nKey.wasPressedThisFrame)
         {
-            if (currentLevel.levelData.name == "TestLevel")
+            if (currentLevel.name == "TestLevel")
                 Load("TestLevel2");
-            else if (currentLevel.levelData.name == "TestLevel2")
+            else if (currentLevel.name == "TestLevel2")
                 Load("TestLevel");
         }
     }
@@ -45,6 +45,25 @@ public class LevelManager : MonoBehaviour
         GameObject loadedLevelObject = Instantiate(
             AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Levels/" + levelName + ".prefab")
         );
+        Level loadedLevel = loadedLevelObject.GetComponent<Level>();
+        loadedLevel.Load();
+        loadedLevel.transform.parent = grid;
+        loadedLevel.transform.position = loadedLevel.transform.parent.position;
+
+        // Unload currentLevel if there is any
+        if (currentLevel != null)
+            Destroy(currentLevel.gameObject);
+
+        currentLevel = loadedLevel;
+        OnLoaded?.Invoke(loadedLevel);
+    }
+
+    public void Load(Level level)
+    {
+        GameObject loadedLevelObject = Instantiate(
+            level.gameObject
+        );
+
         Level loadedLevel = loadedLevelObject.GetComponent<Level>();
         loadedLevel.Load();
         loadedLevel.transform.parent = grid;

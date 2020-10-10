@@ -6,12 +6,19 @@ using System.Linq;
 
 public class Level : MonoBehaviour
 {
-    [SerializeField]
-    public LevelData levelData;
+    // Text that would play out at the beginning of each level
+    // As flavor text/introduction
+    public string levelName;
+    public string description;
 
     public Tilemap floor;
     public Tilemap colliders;
     public Tilemap ceiling;
+
+    public Vector2Int spawnPoint;
+    public Vector2Int goal;
+
+    public Level nextLevel;
 
     public Action OnLoad;
 
@@ -40,4 +47,3 @@ public class Level : MonoBehaviour
         }
     }
 }
-
