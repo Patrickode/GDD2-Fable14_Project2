@@ -1,33 +1,26 @@
 ﻿using System;
-using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(TargetFollower))]
 public class MovingEntity : MonoBehaviour, IMovable
 {
-    public TilemapMovementController tileMoveController;
-
-    private Level currentLevel;
-    public Level CurrentLevel
-    {
-        get => currentLevel;
-        set
-        {
-            currentLevel = value;
-            tileMoveController.ChangeLevel(currentLevel);
-        }
-    }
-    public Transform target;
+    private TilemapMovementController tileMoveController;
+    public TilemapMovementController TileMoveController => tileMoveController;
 
     public Action OnMove;
 
+    private TargetFollower targetFollower;
+
     protected virtual void Awake()
     {
-        if (target == null)
+        targetFollower = GetComponent<TargetFollower>();
+        // Attach a TilemapMovementController to all moving entities' target
+        if (targetFollower.target)
         {
-            target = transform.Cast<Transform>().ToList().Find(t => t.CompareTag("FollowTarget"));
+            targetFollower.target.gameObject.AddComponent(typeof(TilemapMovementController));
+            tileMoveController = targetFollower.target.GetComponent<TilemapMovementController>();
         }
-
-        tileMoveController = new TilemapMovementController(target.transform, currentLevel);
+            
         tileMoveController.OnMove += () => OnMove?.Invoke();
     }
 
@@ -37,10 +30,8 @@ public class MovingEntity : MonoBehaviour, IMovable
     /// <param name="displacement">The amount and direction to try and move in.</param>
     public virtual void Move(Vector2 displacement)
     {
-        if (target != null)
-        {
+        if (targetFollower.target)
             tileMoveController.Move(displacement);
-        }
     }
 
     /// <summary>

@@ -8,22 +8,22 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private LevelManager levelManager;
 
-    void Start()
+    void Awake()
     {
         // Automatically set fields
         if (!player)
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (!levelManager)
-            levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+            levelManager = FindObjectOfType<LevelManager>();
+    }
 
+    private void Start()
+    {
         // Attach level to player every time it is changed
         if (levelManager)
         {
             levelManager.OnLoaded += loadedLevel =>
             {
-                if (player)
-                    player.CurrentLevel = loadedLevel;
-
                 // Spawn player at the level's spawn point
                 player.MoveTo(loadedLevel.spawnPoint);
                 //Set/Reset the player's abilities
@@ -37,9 +37,9 @@ public class PlayerManager : MonoBehaviour
         {
             player.OnMove += () =>
             {
-                if (player.tileMoveController.position == levelManager.currentLevel.goal)
+                if (player.TileMoveController.Position == LevelManager.CurrentLevel.goal)
                 {
-                    levelManager.Load(levelManager.currentLevel.nextLevel);
+                    levelManager.Load(LevelManager.CurrentLevel.nextLevel);
                 }
             };
         }
