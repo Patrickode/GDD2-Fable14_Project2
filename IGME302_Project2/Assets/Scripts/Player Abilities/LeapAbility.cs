@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 
-public class AimableTestAbility : Ability
+public class LeapAbility : Ability
 {
-    public AimableTestAbility()
+    [SerializeField] [Range(2, 4)] private int leapDistance = 2;
+
+    public LeapAbility()
     {
         isAimable = true;
     }
@@ -11,6 +13,6 @@ public class AimableTestAbility : Ability
     {
         base.Activate(user, direction);
 
-        Debug.Log("You aimed and did a theurgy thing!");
+        user.Move(direction * leapDistance);
     }
 }

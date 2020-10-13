@@ -9,9 +9,9 @@ public class TestAbility : Ability
         isAimable = false;
     }
 
-    public override void Activate(Vector2Int direction = default)
+    public override void Activate(MovingEntity user, Vector2Int direction = default)
     {
-        base.Activate(direction);
+        base.Activate(user, direction);
 
         Debug.Log("You did a theurgy thing!");
     }

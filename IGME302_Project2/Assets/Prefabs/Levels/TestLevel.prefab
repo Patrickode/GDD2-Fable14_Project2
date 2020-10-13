@@ -1469,6 +1469,9 @@ MonoBehaviour:
   - ability: {fileID: -6354498922710636665, guid: 963451d5e90edea45b967878ea33102b,
       type: 3}
     usages: 1
+  - ability: {fileID: -5853552886931191550, guid: 913c1df0217ab9440b13dfdc1cc3c593,
+      type: 3}
+    usages: 2
   spawnPoint: {x: -3, y: -1}
   goal: {x: -1, y: -1}
   nextLevel: {fileID: 2663164572571981748, guid: a99939d619ade864093f1f3a163e2ef1,
