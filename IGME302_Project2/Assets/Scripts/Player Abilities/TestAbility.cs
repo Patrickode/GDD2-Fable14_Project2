@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class TestAbility : Ability
 {
-    public TestAbility()
-    {
-        isAimable = false;
-    }
+    public override void Init() { isAimable = false; }
 
     public override void Activate(MovingEntity user, Vector2Int direction = default)
     {

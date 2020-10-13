@@ -1463,15 +1463,15 @@ MonoBehaviour:
   colliders: {fileID: 4693217798305336100}
   ceiling: {fileID: 4693217798342213464}
   abilitySet:
-  - ability: {fileID: 7695918135677045314, guid: a3a6acc42f37a7044998c3743a1c6188,
+  - ability: {fileID: -5299013442601749254, guid: ffc1c4d96eb576c439f1f73810e6ddf1,
       type: 3}
-    usages: 2
-  - ability: {fileID: -6354498922710636665, guid: 963451d5e90edea45b967878ea33102b,
-      type: 3}
-    usages: 1
+    usages: 10
   - ability: {fileID: -5853552886931191550, guid: 913c1df0217ab9440b13dfdc1cc3c593,
       type: 3}
     usages: 2
+  - ability: {fileID: 7695918135677045314, guid: a3a6acc42f37a7044998c3743a1c6188,
+      type: 3}
+    usages: 1
   spawnPoint: {x: -3, y: -1}
   goal: {x: -1, y: -1}
   nextLevel: {fileID: 2663164572571981748, guid: a99939d619ade864093f1f3a163e2ef1,
