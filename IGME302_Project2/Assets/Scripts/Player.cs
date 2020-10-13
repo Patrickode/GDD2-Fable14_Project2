@@ -69,7 +69,7 @@ public class Player : MovingEntity
         //Set it to null afterwards because we're not aiming it anymore.
         else
         {
-            aimingAbility.Activate(moveInput.ToVector2Int());
+            aimingAbility.Activate(this, moveInput.ToVector2Int());
             aimingAbility = null;
         }
     }
@@ -98,7 +98,7 @@ public class Player : MovingEntity
         //or just activate it if it's not.
         else
         {
-            abilityToActivate.Activate();
+            abilityToActivate.Activate(this);
         }
     }
 

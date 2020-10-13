@@ -44,6 +44,10 @@ public class Level : MonoBehaviour
                     Debug.LogError($"{levelName}: Ability at playerAbilities[{i}] isn't assigned! Make sure to " +
                         $"assign an ability to each index of {levelName}'s ability set.");
                 }
+                else
+                {
+                    abilitySet[i].ability.Init();
+                }
             }
         }
     }
