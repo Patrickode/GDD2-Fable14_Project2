@@ -7,15 +7,10 @@ public class Enemy : MovingEntity
     public Action OnAction;
     public Action OnAttack;
 
-    private SpriteRenderer spriteRenderer;
+    public string enemyName;
 
     [SerializeField]
-    public EnemyData enemyData;
+    private EnemyMoveBehaviour moveBehaviour;
 
-    void Start()
-    {
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        if (enemyData?.sprite != null)
-            spriteRenderer.sprite = enemyData.sprite;
-    }
+    public int TurnsUntilAction { get; private set; }
 }
