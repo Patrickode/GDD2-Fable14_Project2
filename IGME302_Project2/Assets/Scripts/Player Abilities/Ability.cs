@@ -16,5 +16,5 @@ public abstract class Ability : MonoBehaviour
     /// </summary>
     /// <param name="user">The entity that activated this ability.</param>
     /// <param name="direction">The direction to activate this ability in, if it's aimable.</param>
-    public virtual void Activate(MovingEntity user, Vector2Int direction = default) { usagesLeft--; }
+    public abstract void Activate(MovingEntity user, Vector2Int direction = default);
 }
