@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(TargetFollower))]
 public class Player : MovingEntity
 {
     private PlayerControls controls;
     private List<Ability> abilities;
+
+    private bool canAct = true;
 
     /// <summary>
     /// The ability the player is currently aiming. Null if not aiming an ability.
@@ -32,6 +35,8 @@ public class Player : MovingEntity
 
         //When movement input is received, use that input to move or activate an ability in that direction
         controls.Movement.Move.performed += ctx => ProcessMoveInput(ctx.ReadValue<Vector2>());
+        //When pause input is received, pause the game and fire the pause menu event
+        controls.Movement.Pause.performed += _ => PauseManager.TogglePause?.Invoke();
         //When bottom row keys are pressed, try to activate the corresponding ability.
         controls.Movement.Ability0.performed += _ => TryActivateAbility(0);
         controls.Movement.Ability1.performed += _ => TryActivateAbility(1);
@@ -40,11 +45,16 @@ public class Player : MovingEntity
         controls.Movement.Ability4.performed += _ => TryActivateAbility(4);
         controls.Movement.Ability5.performed += _ => TryActivateAbility(5);
         controls.Movement.Ability6.performed += _ => TryActivateAbility(6);
+        //When paused, diallow movement / abilities
+        PauseManager.PauseGame += paused => canAct = !paused;
     }
     private void OnDestroy()
     {
-        //Unsubscribe from all events because the player is being destroyed
+        //Unsubscribe from all events
         controls.Movement.Move.performed -= ctx => ProcessMoveInput(ctx.ReadValue<Vector2>());
+
+        controls.Movement.Pause.performed -= _ => PauseManager.TogglePause?.Invoke();
+
         controls.Movement.Ability0.performed -= _ => TryActivateAbility(0);
         controls.Movement.Ability1.performed -= _ => TryActivateAbility(1);
         controls.Movement.Ability2.performed -= _ => TryActivateAbility(2);
@@ -52,6 +62,8 @@ public class Player : MovingEntity
         controls.Movement.Ability4.performed -= _ => TryActivateAbility(4);
         controls.Movement.Ability5.performed -= _ => TryActivateAbility(5);
         controls.Movement.Ability6.performed -= _ => TryActivateAbility(6);
+
+        PauseManager.PauseGame -= paused => canAct = !paused;
     }
 
     /// <summary>
@@ -60,6 +72,9 @@ public class Player : MovingEntity
     /// <param name="moveInput">The direction to move or activate an ability in.</param>
     private void ProcessMoveInput(Vector2 moveInput)
     {
+        //Only do the following if the player can act.
+        if (!canAct) { return; }
+
         //If not aiming an ability, move as normal.
         if (!aimingAbility)
         {
@@ -74,10 +89,14 @@ public class Player : MovingEntity
         }
     }
 
+    /// <summary>
+    /// Try to activate an ability at a given index, or toggle aim mode if that ability is aimable.
+    /// </summary>
+    /// <param name="indexToActivate">The index of the ability to activate. (Z = 1, X = 2, C = 3...)</param>
     private void TryActivateAbility(int indexToActivate)
     {
-        //If the given index is out of range, bail out.
-        if (indexToActivate < 0 || indexToActivate >= abilities.Count) { return; }
+        //If the player can't act or the given index is out of range, bail out.
+        if (!canAct || indexToActivate < 0 || indexToActivate >= abilities.Count) { return; }
 
         //Get the ability to activate from the given index, and bail out if it has no uses left.
         Ability abilityToActivate = abilities[indexToActivate];

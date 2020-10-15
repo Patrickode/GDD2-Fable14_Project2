@@ -10,13 +10,32 @@ public class LevelManager : MonoBehaviour
 
     public Level currentLevel { get; private set; }
 
-    public Action<Level> OnLoaded;
+    public static Action<Level> OnLoaded;
+
+    /// <summary>
+    /// Invoke to load a level by its prefab; if null, defaults to reloading the current level
+    /// </summary>
+    public static Action<Level> LoadLevelByPrefab;
 
     private void Awake()
     {
         // Automatically populate grid if null
         if (grid == null)
             grid = GameObject.FindGameObjectWithTag("Grid")?.transform;
+
+        LoadLevelByPrefab += lvl =>
+        {
+            if (!lvl) { lvl = currentLevel; }
+            Load(lvl);
+        };
+    }
+    private void OnDestroy()
+    {
+        LoadLevelByPrefab -= lvl =>
+        {
+            if (!lvl) { lvl = currentLevel; }
+            Load(lvl);
+        };
     }
 
     private void Start()

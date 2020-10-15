@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour
         // Attach level to player every time it is changed
         if (levelManager)
         {
-            levelManager.OnLoaded += loadedLevel =>
+            LevelManager.OnLoaded += loadedLevel =>
             {
                 if (player)
                     player.CurrentLevel = loadedLevel;

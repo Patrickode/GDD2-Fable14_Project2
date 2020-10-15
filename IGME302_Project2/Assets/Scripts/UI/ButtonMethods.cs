@@ -5,7 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class ButtonMethods : MonoBehaviour
 {
-    private GameObject currentMenuScreen = null;
+    [Tooltip("The current active menu screen. Changes when menus are swapped. Assigned automatically when " +
+        "needed if null.")]
+    [SerializeField] private GameObject currentMenuScreen = null;
+
+    private void Awake()
+    {
+        TryInitCurrentMenuScreen();
+
+        PauseManager.PauseGame += SetCurrentMenuActive;
+    }
+    private void OnDestroy()
+    {
+        PauseManager.PauseGame -= SetCurrentMenuActive;
+    }
+
+    //--- Button Methods ---//
 
     /// <summary>
     /// Loads a scene by index. If <paramref name="index"/> is negative, loads the 
@@ -16,12 +31,19 @@ public class ButtonMethods : MonoBehaviour
     {
         if (index < 0)
         {
-            index *= -1;
-            index += SceneManager.GetActiveScene().buildIndex;
+            index = -index + SceneManager.GetActiveScene().buildIndex;
         }
 
         SceneManager.LoadScene(index);
     }
+
+    public void LoadLevelPrefab(Level levelToLoad) { LevelManager.LoadLevelByPrefab?.Invoke(levelToLoad); }
+
+    public void ReloadCurrentLevel() { LevelManager.LoadLevelByPrefab?.Invoke(null); }
+
+    public void SetPauseState(bool isActive) { PauseManager.PauseGame?.Invoke(isActive); }
+
+    public void TogglePauseState() { PauseManager.TogglePause?.Invoke(); }
 
     /// <summary>
     /// Quits the game.
@@ -46,6 +68,36 @@ public class ButtonMethods : MonoBehaviour
 
     //--- Helper Methods ---//
 
+    private void SetCurrentMenuActive(bool isActive) { SetMenuActive(isActive); }
+    /// <summary>
+    /// Calls SetActive on <paramref name="menuTransform"/>'s GameObject, or calls SetActive on the current 
+    /// active menu if <paramref name="menuTransform"/> is null.
+    /// </summary>
+    /// <param name="isActive">Whether to enable or disable <paramref name="menuTransform"/>'s GameObject.</param>
+    /// <param name="menuTransform">The transform of the menu to set active.</param>
+    public void SetMenuActive(bool isActive, RectTransform menuTransform = null)
+    {
+        if (!menuTransform)
+        {
+            TryInitCurrentMenuScreen();
+
+            if (currentMenuScreen)
+            {
+                currentMenuScreen.SetActive(isActive);
+            }
+            else
+            {
+                Debug.LogWarning("ButtonMethods: SetMenuActive was not given a transform to set active " +
+                    "and currentMenuScreen was not found. Supply a transform to set active, or ensure a " +
+                    "currentMenuScreen can be found.");
+            }
+        }
+        else
+        {
+            menuTransform.gameObject.SetActive(isActive);
+        }
+    }
+
     /// <summary>
     /// Goes through all of this object's children, and sets currentMenu equal to the first active menu.
     /// This will only happen if currentMenu is not assigned.
@@ -57,7 +109,8 @@ public class ButtonMethods : MonoBehaviour
         //Only get the current menu if currentMenu is uninitialized / null.
         if (!currentMenuScreen)
         {
-            //If transformToCheck is null, use this script's transform instead. Otherwise, just use transformToCheck.
+            //If transformToCheck is null, use this script's transform instead.
+            //Otherwise, just use transformToCheck.
             transformToCheck = transformToCheck ? transformToCheck : transform;
 
             //For each child of this object,
