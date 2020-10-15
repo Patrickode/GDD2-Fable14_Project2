@@ -43,6 +43,8 @@ public class ButtonMethods : MonoBehaviour
 
     public void SetPauseState(bool isActive) { PauseManager.PauseGame?.Invoke(isActive); }
 
+    public void TogglePauseState() { PauseManager.TogglePause?.Invoke(); }
+
     /// <summary>
     /// Quits the game.
     /// </summary>
