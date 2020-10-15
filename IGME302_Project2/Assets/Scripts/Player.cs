@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(TargetFollower))]
 public class Player : MovingEntity
@@ -32,6 +33,8 @@ public class Player : MovingEntity
 
         //When movement input is received, use that input to move or activate an ability in that direction
         controls.Movement.Move.performed += ctx => ProcessMoveInput(ctx.ReadValue<Vector2>());
+        //When pause input is received, pause the game and fire the pause menu event
+        controls.Movement.Pause.performed += _ => PauseManager.TogglePause?.Invoke();
         //When bottom row keys are pressed, try to activate the corresponding ability.
         controls.Movement.Ability0.performed += _ => TryActivateAbility(0);
         controls.Movement.Ability1.performed += _ => TryActivateAbility(1);
@@ -43,8 +46,9 @@ public class Player : MovingEntity
     }
     private void OnDestroy()
     {
-        //Unsubscribe from all events because the player is being destroyed
+        //Unsubscribe from all events
         controls.Movement.Move.performed -= ctx => ProcessMoveInput(ctx.ReadValue<Vector2>());
+        controls.Movement.Pause.performed -= _ => PauseManager.TogglePause?.Invoke();
         controls.Movement.Ability0.performed -= _ => TryActivateAbility(0);
         controls.Movement.Ability1.performed -= _ => TryActivateAbility(1);
         controls.Movement.Ability2.performed -= _ => TryActivateAbility(2);

@@ -9,7 +9,16 @@ public class ButtonMethods : MonoBehaviour
         "needed if null.")]
     [SerializeField] private GameObject currentMenuScreen = null;
 
-    private void Start() { TryInitCurrentMenuScreen(); }
+    private void Awake()
+    {
+        TryInitCurrentMenuScreen();
+
+        PauseManager.PauseGame += SetCurrentMenuActive;
+    }
+    private void OnDestroy()
+    {
+        PauseManager.PauseGame -= SetCurrentMenuActive;
+    }
 
     //--- Button Methods ---//
 
@@ -28,13 +37,11 @@ public class ButtonMethods : MonoBehaviour
         SceneManager.LoadScene(index);
     }
 
-    public void LoadLevelPrefab(Level levelToLoad) { Debug.LogWarning("LoadLevelPrefab not implemented yet"); }
+    public void LoadLevelPrefab(Level levelToLoad) { LevelManager.LoadLevelByPrefab?.Invoke(levelToLoad); }
 
-    public void ReloadCurrentLevel() { Debug.LogWarning("ReloadCurrentLevel not implemented yet"); }
+    public void ReloadCurrentLevel() { LevelManager.LoadLevelByPrefab?.Invoke(null); }
 
-    public void OpenMenu(RectTransform menuTransform) { SetMenuActive(true, menuTransform); }
-
-    public void CloseMenu(RectTransform menuTransform) { SetMenuActive(false, menuTransform); }
+    public void SetPauseState(bool isActive) { PauseManager.PauseGame?.Invoke(isActive); }
 
     /// <summary>
     /// Quits the game.
@@ -59,6 +66,7 @@ public class ButtonMethods : MonoBehaviour
 
     //--- Helper Methods ---//
 
+    private void SetCurrentMenuActive(bool isActive) { SetMenuActive(isActive); }
     /// <summary>
     /// Calls SetActive on <paramref name="menuTransform"/>'s GameObject, or calls SetActive on the current 
     /// active menu if <paramref name="menuTransform"/> is null.
