@@ -14,6 +14,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "fe228880-e581-4d2b-9f91-42aacbe92c13",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Ability 0",
                     "type": "Button",
                     "id": "ed216ae2-80df-4131-8084-889144df5463",
@@ -143,7 +151,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -154,7 +162,7 @@
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -165,7 +173,7 @@
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -176,7 +184,7 @@
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -187,7 +195,7 @@
                     "path": "<Keyboard>/z",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Ability 0",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -198,7 +206,7 @@
                     "path": "<Keyboard>/x",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Ability 1",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -209,7 +217,7 @@
                     "path": "<Keyboard>/c",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Ability 2",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -220,7 +228,7 @@
                     "path": "<Keyboard>/v",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Ability 3",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -231,7 +239,7 @@
                     "path": "<Keyboard>/b",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Ability 4",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -242,7 +250,7 @@
                     "path": "<Keyboard>/n",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Ability 5",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -253,8 +261,19 @@
                     "path": "<Keyboard>/m",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard and Mouse",
                     "action": "Ability 6",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "21da5821-650f-4198-a347-dd4f0d98a1f2",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

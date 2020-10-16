@@ -5,7 +5,30 @@ using UnityEditor;
 public class LevelManager : MonoBehaviour
 {
     public static Level CurrentLevel { get; private set; }
-    public Action<Level> OnLoaded;
+
+    public static Action<Level> OnLoaded;
+
+    /// <summary>
+    /// Invoke to load a level by its prefab; if null, defaults to reloading the current level
+    /// </summary>
+    public static Action<Level> LoadLevelByPrefab;
+
+    private void Awake()
+    {
+        LoadLevelByPrefab += lvl =>
+        {
+            if (!lvl) { lvl = currentLevel; }
+            Load(lvl);
+        };
+    }
+    private void OnDestroy()
+    {
+        LoadLevelByPrefab -= lvl =>
+        {
+            if (!lvl) { lvl = currentLevel; }
+            Load(lvl);
+        };
+    }
 
     private void Start()
     {

@@ -22,7 +22,7 @@ public class PlayerManager : MonoBehaviour
         // Attach level to player every time it is changed
         if (levelManager)
         {
-            levelManager.OnLoaded += loadedLevel =>
+            LevelManager.OnLoaded += loadedLevel =>
             {
                 // Spawn player at the level's spawn point
                 player.MoveTo(loadedLevel.spawnPoint);
