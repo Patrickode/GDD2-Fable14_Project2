@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
     {
         LoadLevelByPrefab += lvl =>
         {
-            if (!lvl) { lvl = currentLevel; }
+            if (!lvl) { lvl = CurrentLevel; }
             Load(lvl);
         };
     }
@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
     {
         LoadLevelByPrefab -= lvl =>
         {
-            if (!lvl) { lvl = currentLevel; }
+            if (!lvl) { lvl = CurrentLevel; }
             Load(lvl);
         };
     }
