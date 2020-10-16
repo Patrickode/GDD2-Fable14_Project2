@@ -150,7 +150,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 38101644}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2671664
 SpriteRenderer:
@@ -211,8 +211,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 38101644}
-  - component: {fileID: 38101643}
   - component: {fileID: 38101642}
+  - component: {fileID: 38101643}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -232,7 +232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5048eebca4f029144b4d531ddd197e10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   enemyName: 
   moveBehaviour: {fileID: 0}
 --- !u!114 &38101643
@@ -247,8 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0863da8e3f3916e4197b8bd1ae2749b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 256830304}
+  target: {fileID: 38101644}
   followSpeed: 10
+  targetContainer: {fileID: 0}
 --- !u!4 &38101644
 Transform:
   m_ObjectHideFlags: 0
@@ -260,7 +260,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 256830304}
   - {fileID: 2671663}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -803,8 +802,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0863da8e3f3916e4197b8bd1ae2749b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1497720301}
+  target: {fileID: 438205606}
   followSpeed: 10
+  targetContainer: {fileID: 0}
 --- !u!114 &438205605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,7 +817,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a9d86f9c5bcd942aaf46a8f697804a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1497720301}
 --- !u!4 &438205606
 Transform:
   m_ObjectHideFlags: 0
@@ -830,7 +829,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 525016898}
-  - {fileID: 1497720301}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -875,6 +873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 438205606}
   followSpeed: 10
+  targetContainer: {fileID: 0}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1048,7 +1047,6 @@ Transform:
   m_Children:
   - {fileID: 137861732}
   - {fileID: 1509236250}
-  - {fileID: 1245093884}
   - {fileID: 1006143469}
   - {fileID: 1884114210}
   m_Father: {fileID: 0}
@@ -1064,9 +1062,10 @@ GameObject:
   m_Component:
   - component: {fileID: 565706650}
   - component: {fileID: 565706651}
+  - component: {fileID: 565706652}
   m_Layer: 0
   m_Name: Grid
-  m_TagString: Grid
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
