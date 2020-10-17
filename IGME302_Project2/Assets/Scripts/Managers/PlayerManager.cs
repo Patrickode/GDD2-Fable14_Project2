@@ -8,38 +8,38 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private LevelManager levelManager;
 
-    void Start()
+    void Awake()
     {
         // Automatically set fields
         if (!player)
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (!levelManager)
-            levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+            levelManager = FindObjectOfType<LevelManager>();
 
         // Attach level to player every time it is changed
         if (levelManager)
         {
             LevelManager.OnLoaded += loadedLevel =>
             {
-                if (player)
-                    player.CurrentLevel = loadedLevel;
-
                 // Spawn player at the level's spawn point
                 player.MoveTo(loadedLevel.spawnPoint);
                 //Set/Reset the player's abilities
                 player.SetAbilities(loadedLevel.abilitySet);
             };
         }
+    }
 
+    void Start()
+    {
         // Check if the player has reached the goal every move
         // If they have, load the next level
         if (player && levelManager)
         {
             player.OnMove += () =>
             {
-                if (player.tileMoveController.position == levelManager.currentLevel.goal)
+                if (player.TileMoveController.Position == LevelManager.CurrentLevel.goal)
                 {
-                    levelManager.Load(levelManager.currentLevel.nextLevel);
+                    levelManager.Load(LevelManager.CurrentLevel.nextLevel);
                 }
             };
         }
