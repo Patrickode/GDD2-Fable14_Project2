@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(TargetFollower))]
 public class MovingEntity : MonoBehaviour, IMovable
 {
+    // [SerializeField]
     private TilemapMovementController tileMoveController;
     public TilemapMovementController TileMoveController => tileMoveController;
 
@@ -14,14 +15,24 @@ public class MovingEntity : MonoBehaviour, IMovable
     protected virtual void Awake()
     {
         targetFollower = GetComponent<TargetFollower>();
+
+    }
+
+    protected virtual void Start()
+    {
         // Attach a TilemapMovementController to all moving entities' target
-        if (targetFollower.target)
-        {
-            targetFollower.target.gameObject.AddComponent(typeof(TilemapMovementController));
-            tileMoveController = targetFollower.target.GetComponent<TilemapMovementController>();
-        }
-            
-        tileMoveController.OnMove += () => OnMove?.Invoke();
+        tileMoveController = targetFollower.Target.gameObject.AddComponent(typeof(TilemapMovementController)) as TilemapMovementController;
+        TileMoveController.OnMove += TriggerMoveEvent;
+    }
+
+    private void OnDestroy()
+    {
+        TileMoveController.OnMove -= TriggerMoveEvent;
+    }
+
+    private void TriggerMoveEvent()
+    {
+        OnMove?.Invoke();
     }
 
     /// <summary>
@@ -30,8 +41,8 @@ public class MovingEntity : MonoBehaviour, IMovable
     /// <param name="displacement">The amount and direction to try and move in.</param>
     public virtual void Move(Vector2 displacement)
     {
-        if (targetFollower.target)
-            tileMoveController.Move(displacement);
+        if (targetFollower.Target)
+            TileMoveController.Move(displacement);
     }
 
     /// <summary>
@@ -40,10 +51,10 @@ public class MovingEntity : MonoBehaviour, IMovable
     /// <param name="position">The position to try and move to.</param>
     public virtual void MoveTo(Vector2 position)
     {
-        if (!tileMoveController.IsCollision(position))
+        if (!TileMoveController.IsCollision(position))
         {
             transform.position = (Vector3)position;
-            tileMoveController.MoveTo(position);
+            TileMoveController.MoveTo(position);
         }
     }
 }

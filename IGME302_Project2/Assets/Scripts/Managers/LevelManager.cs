@@ -71,6 +71,6 @@ public class LevelManager : MonoBehaviour
         CurrentLevel = loadedLevel;
 
         // Call the loaded event
-        OnLoaded?.Invoke(loadedLevel);
+        LevelManager.OnLoaded?.Invoke(loadedLevel);
     }
 }

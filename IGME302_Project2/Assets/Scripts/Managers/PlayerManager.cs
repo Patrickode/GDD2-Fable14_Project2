@@ -15,10 +15,7 @@ public class PlayerManager : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (!levelManager)
             levelManager = FindObjectOfType<LevelManager>();
-    }
 
-    private void Start()
-    {
         // Attach level to player every time it is changed
         if (levelManager)
         {
@@ -30,7 +27,10 @@ public class PlayerManager : MonoBehaviour
                 player.SetAbilities(loadedLevel.abilitySet);
             };
         }
+    }
 
+    void Start()
+    {
         // Check if the player has reached the goal every move
         // If they have, load the next level
         if (player && levelManager)

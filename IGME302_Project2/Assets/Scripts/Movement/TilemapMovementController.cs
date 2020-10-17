@@ -12,7 +12,7 @@ public class TilemapMovementController : MonoBehaviour, IMovable
     public bool IsCollision(Vector2 position)
     {
         Vector3Int gridPosition = LevelManager.CurrentLevel.floor.WorldToCell(position);
-        // Ground does not exist or ceiling does not exist or tile is a collider?
+        // Ground does not exist or tile is a collider?
         return !LevelManager.CurrentLevel.floor.HasTile(gridPosition) || LevelManager.CurrentLevel.colliders.HasTile(gridPosition);
     }
 
@@ -38,5 +38,10 @@ public class TilemapMovementController : MonoBehaviour, IMovable
     {
         if (!IsCollision(position))
             transform.position = position;
+    }
+
+    private void OnDestroy()
+    {
+        OnMove = null;
     }
 }
