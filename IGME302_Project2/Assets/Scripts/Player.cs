@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,9 +12,11 @@ public class Player : MovingEntity
     private bool canAct = true;
 
     /// <summary>
-    /// The ability the player is currently aiming. Null if not aiming an ability.
+    /// The index of the ability the player is currently aiming. Equals -1 if not aiming an ability.
     /// </summary>
-    private Ability aimingAbility = null;
+    private int aimingAbilityIndex = -1;
+
+    public static Action<Ability, int> UseAbility;
 
     void OnEnable()
     {
@@ -76,7 +79,7 @@ public class Player : MovingEntity
         if (!canAct) { return; }
 
         //If not aiming an ability, move as normal.
-        if (!aimingAbility)
+        if (aimingAbilityIndex < 0)
         {
             Move(moveInput);
         }
@@ -84,8 +87,9 @@ public class Player : MovingEntity
         //Set it to null afterwards because we're not aiming it anymore.
         else
         {
-            aimingAbility.Activate(this, moveInput.ToVector2Int());
-            aimingAbility = null;
+            abilities[aimingAbilityIndex].Activate(this, moveInput.ToVector2Int());
+            UseAbility?.Invoke(abilities[aimingAbilityIndex], aimingAbilityIndex);
+            aimingAbilityIndex = -1;
         }
     }
 
@@ -102,22 +106,27 @@ public class Player : MovingEntity
         Ability abilityToActivate = abilities[indexToActivate];
         if (abilityToActivate.usagesLeft <= 0) { Debug.Log("This ability has no uses left."); return; }
 
-        //If we're already aiming this ability, cancel aiming.
-        if (abilityToActivate.Equals(aimingAbility))
+        //If we're not aiming an ability already...
+        if (aimingAbilityIndex < 0)
         {
-            Debug.Log("Cancelled aiming.");
-            aimingAbility = null;
+            //...and this ability is aimable, start aiming this ability.
+            if (abilityToActivate.isAimable)
+            {
+                Debug.Log("Aiming...");
+                aimingAbilityIndex = indexToActivate;
+            }
+            //Otherwise, just activate it.
+            else
+            {
+                abilityToActivate.Activate(this);
+                UseAbility?.Invoke(abilityToActivate, indexToActivate);
+            }
         }
-        //Otherwise, start aiming the ability if it's aimable,
-        else if (abilities[indexToActivate].isAimable)
-        {
-            Debug.Log("Aiming...");
-            aimingAbility = abilities[indexToActivate];
-        }
-        //or just activate it if it's not.
+        //If we are aiming an ability, cancel aiming.
         else
         {
-            abilityToActivate.Activate(this);
+            Debug.Log("Cancelled aiming.");
+            aimingAbilityIndex = -1;
         }
     }
 
