@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(TargetFollower))]
 public class Player : MovingEntity
 {
+    [Space(10)]
+    [SerializeField] private GameObject aimingArrows = null;
+
     private PlayerControls controls;
     private List<Ability> abilities;
 
     private bool canAct = true;
-
     /// <summary>
     /// The index of the ability the player is currently aiming. Equals -1 if not aiming an ability.
     /// </summary>
@@ -89,6 +91,8 @@ public class Player : MovingEntity
         {
             abilities[aimingAbilityIndex].Activate(this, moveInput.ToVector2Int());
             UseAbility?.Invoke(abilities[aimingAbilityIndex], aimingAbilityIndex);
+
+            aimingArrows.SetActive(false);
             aimingAbilityIndex = -1;
         }
     }
@@ -104,7 +108,7 @@ public class Player : MovingEntity
 
         //Get the ability to activate from the given index, and bail out if it has no uses left.
         Ability abilityToActivate = abilities[indexToActivate];
-        if (abilityToActivate.usagesLeft <= 0) { Debug.Log("This ability has no uses left."); return; }
+        if (abilityToActivate.usagesLeft <= 0) { return; }
 
         //If we're not aiming an ability already...
         if (aimingAbilityIndex < 0)
@@ -112,7 +116,7 @@ public class Player : MovingEntity
             //...and this ability is aimable, start aiming this ability.
             if (abilityToActivate.isAimable)
             {
-                Debug.Log("Aiming...");
+                aimingArrows.SetActive(true);
                 aimingAbilityIndex = indexToActivate;
             }
             //Otherwise, just activate it.
@@ -125,7 +129,7 @@ public class Player : MovingEntity
         //If we are aiming an ability, cancel aiming.
         else
         {
-            Debug.Log("Cancelled aiming.");
+            aimingArrows.SetActive(false);
             aimingAbilityIndex = -1;
         }
     }
