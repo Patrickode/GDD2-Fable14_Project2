@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 389452238316785556}
   - component: {fileID: 2323191496843092185}
   - component: {fileID: 3724924752512735326}
-  - component: {fileID: 7498231233700163548}
+  - component: {fileID: 3267243283079472497}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -113,7 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5048eebca4f029144b4d531ddd197e10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileMoveController: {fileID: 0}
   enemyName: Slime from Test 1
   turnsPerAction: 2
 --- !u!114 &3724924752512735326
@@ -131,7 +130,7 @@ MonoBehaviour:
   target: {fileID: 389452238316785556}
   followSpeed: 10
   targetContainer: {fileID: 0}
---- !u!114 &7498231233700163548
+--- !u!114 &3267243283079472497
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

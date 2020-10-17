@@ -645,7 +645,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a9d86f9c5bcd942aaf46a8f697804a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileMoveController: {fileID: 0}
 --- !u!4 &438205606
 Transform:
   m_ObjectHideFlags: 0

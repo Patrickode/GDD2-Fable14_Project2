@@ -35,7 +35,7 @@ public class FollowPlayer : EnemyBehaviour
     // Move towards the player every action
     public override void Behave()
     {
-        if (pathToPlayer != null)
+        if (pathToPlayer != null && pathToPlayer.Count > 0)
         {
             //// Debug: Print out path listed
             //string debugString = "\nClick To Expand\n";
@@ -71,14 +71,11 @@ public class FollowPlayer : EnemyBehaviour
             {
                 Vector3Int currentPosition = new Vector3Int(x, y, 0);
 
-                if (colliders.HasTile(currentPosition) || EnemyAtPosition(currentPosition.x, currentPosition.y))
+                // Collider has tiles offset at y by 1, use this to check with HasTile()
+                Vector3Int currentPositionShifted = new Vector3Int(currentPosition.x, currentPosition.y - 1, currentPosition.z);
+                
+                if (colliders.HasTile(currentPositionShifted) || EnemyAtPosition(currentPosition.x, currentPosition.y))
                 {
-                    if (currentPosition.x == player.TileMoveController.Position.x && currentPosition.y == player.TileMoveController.Position.y && colliders.HasTile(currentPosition))
-                    {
-                        //Debug.Log(currentPosition);
-                        //Debug.Log(colliders.GetTile(currentPosition));
-                    }
-                        
                     // A z other than 0 will make the tile unwalkable on the A* algorithm
                     currentPosition.z = 1;
                 }

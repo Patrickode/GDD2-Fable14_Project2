@@ -53,11 +53,10 @@ public static class Astar
         }
 
         // Exit early
-        //if (!IsValidPath(startVertex, endVertex))
-        //{
-        //    Debug.LogError("reached");
-        //    return null;
-        //}
+        if (!IsValidPath(startVertex, endVertex))
+        {
+            return null;
+        }
 
         // A* Algorithm
         List<Vertex> openSet = new List<Vertex>();
