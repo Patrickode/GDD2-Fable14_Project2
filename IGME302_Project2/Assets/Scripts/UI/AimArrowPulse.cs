@@ -7,9 +7,9 @@ public class AimArrowPulse : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRend = null;
 
     [Tooltip("How far away from the start alpha the arrow will go when pulsing.")]
-    [SerializeField] float alphaPulseRange = 0.35f;
+    [SerializeField] float alphaPulseRange = 0.55f;
     [Tooltip("How far away from the start position the arrow will go when oscillating.")]
-    [SerializeField] float oscillateRange = 0.1f;
+    [SerializeField] float oscillateRange = 0.05f;
 
     [SerializeField] float pulseTime = 1;
     [SerializeField] float oscillateTime = 0.5f;
