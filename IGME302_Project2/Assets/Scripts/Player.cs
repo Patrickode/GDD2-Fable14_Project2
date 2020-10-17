@@ -20,8 +20,6 @@ public class Player : MovingEntity
 
     public static Action<Ability, int> UseAbility;
 
-    public Action OnDeath;
-
     void OnEnable()
     {
         controls.Enable();

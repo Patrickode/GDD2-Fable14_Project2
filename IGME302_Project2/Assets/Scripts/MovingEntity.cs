@@ -1,38 +1,34 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(TargetFollower))]
 public class MovingEntity : MonoBehaviour, IMovable
 {
-    // [SerializeField]
-    private TilemapMovementController tileMoveController;
-    public TilemapMovementController TileMoveController => tileMoveController;
+    public TilemapMovementController tileMoveController;
+
+    private Level currentLevel;
+    public Level CurrentLevel
+    {
+        get => currentLevel;
+        set
+        {
+            currentLevel = value;
+            tileMoveController.ChangeLevel(currentLevel);
+        }
+    }
+    public Transform target;
 
     public Action OnMove;
 
-    private TargetFollower targetFollower;
-
     protected virtual void Awake()
     {
-        targetFollower = GetComponent<TargetFollower>();
+        if (target == null)
+        {
+            target = transform.Cast<Transform>().ToList().Find(t => t.CompareTag("FollowTarget"));
+        }
 
-    }
-
-    protected virtual void Start()
-    {
-        // Attach a TilemapMovementController to all moving entities' target
-        tileMoveController = targetFollower.Target.gameObject.AddComponent(typeof(TilemapMovementController)) as TilemapMovementController;
-        TileMoveController.OnMove += TriggerMoveEvent;
-    }
-
-    private void OnDestroy()
-    {
-        TileMoveController.OnMove -= TriggerMoveEvent;
-    }
-
-    private void TriggerMoveEvent()
-    {
-        OnMove?.Invoke();
+        tileMoveController = new TilemapMovementController(target.transform, currentLevel);
+        tileMoveController.OnMove += () => OnMove?.Invoke();
     }
 
     /// <summary>
@@ -41,8 +37,10 @@ public class MovingEntity : MonoBehaviour, IMovable
     /// <param name="displacement">The amount and direction to try and move in.</param>
     public virtual void Move(Vector2 displacement)
     {
-        if (targetFollower.Target)
-            TileMoveController.Move(displacement);
+        if (target != null)
+        {
+            tileMoveController.Move(displacement);
+        }
     }
 
     /// <summary>
@@ -51,10 +49,10 @@ public class MovingEntity : MonoBehaviour, IMovable
     /// <param name="position">The position to try and move to.</param>
     public virtual void MoveTo(Vector2 position)
     {
-        if (!TileMoveController.IsCollision(position))
+        if (!tileMoveController.IsCollision(position))
         {
             transform.position = (Vector3)position;
-            TileMoveController.MoveTo(position);
+            tileMoveController.MoveTo(position);
         }
     }
 }

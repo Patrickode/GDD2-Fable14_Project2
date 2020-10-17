@@ -4,42 +4,27 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
     public int turnCount { get; private set; }
-    public static Action OnTurnEnd;
-
-    [SerializeField]
-    private LevelManager levelManager;
+    Action OnTurnEnd;
 
     [SerializeField]
     private Player player;
 
-    void Awake()
+    void Start()
     {
-        if (!player)
-            player = FindObjectOfType<Player>();
-        if (!levelManager)
-            levelManager = FindObjectOfType<LevelManager>();
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
-    }
-
-    private void OnEnable()
-    {
-        player.OnMove += IncreaseTurn;
-        LevelManager.OnLoaded += ResetTurns;
-    }
-
-    private void OnDisable()
-    {
-        player.OnMove -= IncreaseTurn;
-        LevelManager.OnLoaded -= ResetTurns;
+        turnCount = 0;
+        player.OnMove += () => OnTurnEnd?.Invoke();
+        OnTurnEnd += IncreaseTurn;
     }
 
     private void IncreaseTurn()
     {
         turnCount++;
-        OnTurnEnd?.Invoke();
     }
 
-    private void ResetTurns(Level levelLoaded)
+    private void ResetTurns()
     {
         turnCount = 0;
     }
