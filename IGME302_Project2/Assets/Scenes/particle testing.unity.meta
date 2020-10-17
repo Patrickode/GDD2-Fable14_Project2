@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:IGME302_Project2/Assets/Scripts/Player Abilities.meta
+guid: 10169b18172952b4e8eaff16b4bac30b
+folderAsset: yes
+=======
 guid: 05c6b5a85d9187947a41ce8867b92ff2
+>>>>>>> main:IGME302_Project2/Assets/Scenes/particle testing.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
