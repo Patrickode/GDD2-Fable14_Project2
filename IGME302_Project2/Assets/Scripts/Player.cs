@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,8 @@ public class Player : MovingEntity
     /// The ability the player is currently aiming. Null if not aiming an ability.
     /// </summary>
     private Ability aimingAbility = null;
+
+    public Action OnDeath;
 
     void OnEnable()
     {
