@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Linq;
+﻿using System;
+using UnityEngine;
 
 public class TargetFollower : MonoBehaviour
 {
@@ -25,11 +25,19 @@ public class TargetFollower : MonoBehaviour
 
     void Update()
     {
-        if (target != null)
+        // Move towards the target at all times if there is any
+        if (Target)
         {
-            Vector3 newPosition = Vector3.Lerp(transform.position, target.position, followSpeed * Time.deltaTime);
+            Vector3 newPosition = Vector3.Lerp(transform.position, Target.position, followSpeed * Time.deltaTime);
+            // Follower keeps its z position
             newPosition.z = transform.position.z;
             transform.position = newPosition; 
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (Target)
+            Destroy(Target.gameObject);
     }
 }

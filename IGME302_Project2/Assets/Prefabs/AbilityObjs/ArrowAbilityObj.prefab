@@ -45,7 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAimable: 0
   usagesLeft: 0
-  icon: {fileID: -650247259513548065, guid: c022ee5a8cc035643b1760a3b56ceaf7, type: 3}
   arrowPrefab: {fileID: 959524182747137602, guid: 3bb7b58b01f6a6a45a76e5a40e607a4f,
     type: 3}
   arrowStartOffset: 0.25
