@@ -55,6 +55,7 @@ public class LevelManager : MonoBehaviour
     {
         // Instantiate level prefab
         GameObject loadedLevelObject = Instantiate(levelPrefab);
+        loadedLevelObject.name = levelPrefab.name;
         // Get the Level component
         Level loadedLevel = loadedLevelObject.GetComponent<Level>();
 

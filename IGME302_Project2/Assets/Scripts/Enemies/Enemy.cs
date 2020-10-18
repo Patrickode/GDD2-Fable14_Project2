@@ -13,7 +13,7 @@ public class Enemy : MovingEntity
     public int turnsPerAction;
 
     private int turnsUntilAction;
-    private int TurnsUntilAction
+    public int TurnsUntilAction
     {
         get => turnsUntilAction;
         set
@@ -37,10 +37,8 @@ public class Enemy : MovingEntity
         behaviours = GetComponents<EnemyBehaviour>();
     }
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-
         turnsUntilAction = turnsPerAction;
     }
 
@@ -55,7 +53,7 @@ public class Enemy : MovingEntity
     {
         TurnManager.OnTurnEnd -= ReduceTurnsUntilAction;
         OnMove = null;
-        OnAction = null;
+        OnAction -= null;
         OnAttack = null;
         OnDeath -= Die;
     }

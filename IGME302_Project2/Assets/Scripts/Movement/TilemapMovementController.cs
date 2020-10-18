@@ -6,14 +6,33 @@ public class TilemapMovementController : MonoBehaviour, IMovable
     public Vector2Int Position => transform.position.ToVector2().ToVector2Int();
 
     // Triggers every successful move
-    public Action OnMove;
+    public Action<Vector3, Vector3> OnMove;
 
     // Returns whether the tile at position can be moved to
-    public bool IsCollision(Vector2 position)
+    public bool IsValidMove(Vector2 position)
     {
         Vector3Int gridPosition = LevelManager.CurrentLevel.floor.WorldToCell(position);
-        // Ground does not exist or tile is a collider?
-        return !LevelManager.CurrentLevel.floor.HasTile(gridPosition) || LevelManager.CurrentLevel.colliders.HasTile(gridPosition);
+
+        // Tile exists in ground
+        // Does not exist in colliders
+        // There is no enemy on top of it
+        if (LevelManager.CurrentLevel.floor.HasTile(gridPosition) &&
+            !LevelManager.CurrentLevel.colliders.HasTile(gridPosition) &&
+            !EnemyAt(position.ToVector2Int()))
+            return true;
+
+        return false;
+    }
+
+    private bool EnemyAt(Vector2Int position)
+    {
+        foreach (Enemy enemy in LevelManager.CurrentLevel.enemies)
+        {
+            if (enemy.Position == position)
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -23,10 +42,11 @@ public class TilemapMovementController : MonoBehaviour, IMovable
     public void Move(Vector2 displacement)
     {
         Vector3 newPosition = transform.position + (Vector3)displacement;
-        if (!IsCollision(newPosition))
+        if (IsValidMove(newPosition))
         {
+            Vector3 oldPosition = transform.position;
             transform.position = newPosition;
-            OnMove?.Invoke();
+            OnMove?.Invoke(oldPosition, newPosition);
         }
     }
 
@@ -36,12 +56,7 @@ public class TilemapMovementController : MonoBehaviour, IMovable
     /// <param name="position">The position to try and move to.</param>
     public void MoveTo(Vector2 position)
     {
-        if (!IsCollision(position))
+        if (IsValidMove(position))
             transform.position = position;
-    }
-
-    private void OnDestroy()
-    {
-        OnMove = null;
     }
 }

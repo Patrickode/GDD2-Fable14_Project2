@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
 public class FollowPlayer : EnemyBehaviour
@@ -11,6 +9,8 @@ public class FollowPlayer : EnemyBehaviour
     private Player player;
 
     private Stack<Vertex> pathToPlayer;
+
+    private int DistanceToPlayer => Mathf.CeilToInt(Vector2Int.Distance(enemy.Position, player.Position));
 
     protected override void Awake()
     {
@@ -23,19 +23,18 @@ public class FollowPlayer : EnemyBehaviour
 
     private void OnEnable()
     {
-        // Update path to player every time it moves
-        if (player) player.OnMove += UpdatePathToPlayer;
+        player.OnMove += UpdatePathToPlayer;
     }
 
     private void OnDisable()
     {
-        if (player) player.OnMove -= UpdatePathToPlayer;
+        player.OnMove -= UpdatePathToPlayer;
     }
 
     // Move towards the player every action
     public override void Behave()
     {
-        if (pathToPlayer != null && pathToPlayer.Count > 0)
+        if (pathToPlayer != null && pathToPlayer.Count > 0 && DistanceToPlayer > 1)
         {
             //// Debug: Print out path listed
             //string debugString = "\nClick To Expand\n";
@@ -47,9 +46,12 @@ public class FollowPlayer : EnemyBehaviour
 
             Vertex nextVertex = pathToPlayer.Pop();
             Vector2Int moveTo = new Vector2Int(nextVertex.x, nextVertex.y);
-            Vector2Int displacement = moveTo - enemyScript.TileMoveController.Position;
-
-            enemyScript.TileMoveController.Move(displacement);
+            // Don't move to the player's position if next to it
+            if (moveTo != player.TileMoveController.Position)
+            {
+                Vector2Int displacement = moveTo - enemy.TileMoveController.Position;
+                enemy.TileMoveController.Move(displacement);
+            }
         }
     }
 
@@ -73,8 +75,7 @@ public class FollowPlayer : EnemyBehaviour
 
                 // Collider has tiles offset at y by 1, use this to check with HasTile()
                 Vector3Int currentPositionShifted = new Vector3Int(currentPosition.x, currentPosition.y - 1, currentPosition.z);
-                
-                if (colliders.HasTile(currentPositionShifted) || EnemyAtPosition(currentPosition.x, currentPosition.y))
+                if (colliders.HasTile(currentPositionShifted) || EnemyAt(currentPosition))
                 {
                     // A z other than 0 will make the tile unwalkable on the A* algorithm
                     currentPosition.z = 1;
@@ -99,29 +100,22 @@ public class FollowPlayer : EnemyBehaviour
         return walkableTiles;
     }
 
-    private bool EnemyAtPosition(int x, int y)
+    private void UpdatePathToPlayer(Vector3 oldPosition, Vector3 newPosition)
+    {
+        if (enemy.TileMoveController)
+            pathToPlayer = Astar.GetTilePath(GetWalkableTiles(), enemy.TileMoveController.Position, newPosition.ToVector2().ToVector2Int());
+        else
+            pathToPlayer = null;
+    }
+
+    private bool EnemyAt(Vector3Int position)
     {
         foreach (Enemy enemy in LevelManager.CurrentLevel.enemies)
         {
-            if (enemy.TileMoveController)
-            {
-                if (enemy.TileMoveController.Position.x == x && enemy.TileMoveController.Position.y == y)
-                    return true;
-            }
+            if (enemy.Position == (Vector2Int)position)
+                return true;
         }
 
         return false;
-    }
-
-    private void UpdatePathToPlayer()
-    {
-        if (enemyScript.TileMoveController)
-            pathToPlayer = Astar.GetTilePath(GetWalkableTiles(), enemyScript.TileMoveController.Position, player.TileMoveController.Position);
-    }
-
-    private void OnDestroy()
-    {
-        if (player)
-            player.OnMove -= UpdatePathToPlayer;
     }
 }

@@ -10,37 +10,18 @@ public class TargetFollower : MonoBehaviour
         get => target;
         set
         {
+            OnTargetChanged?.Invoke(Target, value);
             target = value;
-            OnTargetChanged?.Invoke();
         }
     }
     public float followSpeed = 10f;
 
-    [SerializeField]
-    private GameObject targetContainer;
-
-    public Action OnTargetChanged;
-
-    void Awake()
-    {
-        // Set the target container automatically if not set
-        if (!targetContainer)
-            targetContainer = GameObject.FindGameObjectWithTag("Target Container");
-
-        // If object is meant to follow itself, create a target for it
-        if (Target == transform || Target == null)
-        {
-            GameObject newTarget = new GameObject();
-            newTarget.transform.position = transform.position;
-            newTarget.name = $"{this.name}Target";
-
-            // Organize it into the Target Container
-            if (targetContainer)
-                newTarget.transform.parent = targetContainer.transform;
-
-            Target = newTarget.transform;
-        }
-    }
+    /// <summary>
+    /// Event that fires whenever the target is changed.
+    /// First Transform is the old target.
+    /// Second Transform is the new target.
+    /// </summary>
+    public Action<Transform, Transform> OnTargetChanged;
 
     void Update()
     {

@@ -100,8 +100,8 @@ public static class Astar
                     path.Push(path.Peek().previousNeighbour);
                 }
 
-                // Filter out the end and start vertices
-                path = new Stack<Vertex>(path.Where(vertex => vertex != startVertex && vertex != endVertex).Reverse());
+                // Filter out start vertex
+                path = new Stack<Vertex>(path.Where(vertex => vertex != startVertex).Reverse());
 
                 return path;
             }

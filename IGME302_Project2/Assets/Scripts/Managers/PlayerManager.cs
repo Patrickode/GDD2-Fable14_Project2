@@ -15,33 +15,38 @@ public class PlayerManager : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (!levelManager)
             levelManager = FindObjectOfType<LevelManager>();
-
-        // Attach level to player every time it is changed
-        if (levelManager)
-        {
-            LevelManager.OnLoaded += loadedLevel =>
-            {
-                // Spawn player at the level's spawn point
-                player.MoveTo(loadedLevel.spawnPoint);
-                //Set/Reset the player's abilities
-                player.SetAbilities(loadedLevel.abilitySet);
-            };
-        }
     }
 
-    void Start()
+    private void OnEnable()
     {
-        // Check if the player has reached the goal every move
-        // If they have, load the next level
-        if (player && levelManager)
-        {
-            player.OnMove += () =>
-            {
-                if (player.TileMoveController.Position == LevelManager.CurrentLevel.goal)
-                {
-                    levelManager.Load(LevelManager.CurrentLevel.nextLevel);
-                }
-            };
-        }
+        LevelManager.OnLoaded += InitPlayer;
+        player.OnMove += CheckLevelGoalReached;
+        player.OnDeath += ReloadCurrentLevel;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.OnLoaded -= InitPlayer;
+        player.OnMove -= CheckLevelGoalReached;
+        player.OnDeath -= ReloadCurrentLevel;
+    }
+
+    private void InitPlayer(Level loadedLevel)
+    {
+        // Spawn player at the level's spawn point
+        player.MoveTo(loadedLevel.spawnPoint);
+        //Set/Reset the player's abilities
+        player.SetAbilities(loadedLevel.abilitySet);
+    }
+
+    private void CheckLevelGoalReached(Vector3 oldPosition, Vector3 newPosition)
+    {
+        if (newPosition.ToVector2().ToVector2Int() == LevelManager.CurrentLevel.goal)
+            levelManager.Load(LevelManager.CurrentLevel.nextLevel);
+    }
+
+    private void ReloadCurrentLevel()
+    {
+        levelManager.Load(LevelManager.CurrentLevel.name);
     }
 }
