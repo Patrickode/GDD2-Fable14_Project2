@@ -14,7 +14,6 @@ public class Level : MonoBehaviour
     public Tilemap floor;
     public Tilemap colliders;
     public Tilemap ceiling;
-    public List<Enemy> enemies;
 
     [Space(10)]
     public AbilityInstance[] abilitySet;
@@ -30,8 +29,6 @@ public class Level : MonoBehaviour
     public void Awake()
     {
         OnLoad += SetLevelTilemap;
-
-        enemies = GetComponentsInChildren<Enemy>().ToList();
 
         if (abilitySet.Length < 1)
         {
@@ -69,6 +66,9 @@ public class Level : MonoBehaviour
         if (colliders == null)
             colliders = children.Find(child => child.CompareTag("ColliderTilemap"))?.GetComponent<Tilemap>();
         if (ceiling == null)
+        {
             ceiling = children.Find(child => child.CompareTag("CeilingTilemap"))?.GetComponent<Tilemap>();
+            Debug.Log(ceiling);
+        }
     }
 }

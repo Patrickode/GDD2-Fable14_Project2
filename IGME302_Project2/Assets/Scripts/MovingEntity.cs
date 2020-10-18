@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(TargetFollower))]
 public class MovingEntity : MonoBehaviour, IMovable
 {
     private TargetFollower targetFollower;
@@ -53,8 +53,10 @@ public class MovingEntity : MonoBehaviour, IMovable
     /// <param name="displacement">The amount and direction to try and move in.</param>
     public virtual void Move(Vector2 displacement)
     {
-        if (targetFollower.Target)
-            TileMoveController.Move(displacement);
+        if (target != null)
+        {
+            tileMoveController.Move(displacement);
+        }
     }
 
     /// <summary>
@@ -66,7 +68,7 @@ public class MovingEntity : MonoBehaviour, IMovable
         if (TileMoveController.IsValidMove(position))
         {
             transform.position = (Vector3)position;
-            TileMoveController.MoveTo(position);
+            tileMoveController.MoveTo(position);
         }
     }
 }

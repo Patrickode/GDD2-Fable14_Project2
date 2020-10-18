@@ -4,10 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - FollowTarget
   - FloorTilemap
   - ColliderTilemap
+  - Grid
   - CeilingTilemap
-  - Target Container
   layers:
   - Default
   - TransparentFX

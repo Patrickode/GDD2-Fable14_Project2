@@ -4,20 +4,15 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
     public int turnCount { get; private set; }
-    public static Action OnTurnEnd;
-
-    [SerializeField]
-    private LevelManager levelManager;
+    Action OnTurnEnd;
 
     [SerializeField]
     private Player player;
 
-    void Awake()
+    void Start()
     {
-        if (!player)
-            player = FindObjectOfType<Player>();
-        if (!levelManager)
-            levelManager = FindObjectOfType<LevelManager>();
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
     }
 
@@ -47,10 +42,9 @@ public class TurnManager : MonoBehaviour
     private void IncreaseTurn(Vector3 oldPosition, Vector3 newPosition)
     {
         turnCount++;
-        OnTurnEnd?.Invoke();
     }
 
-    private void ResetTurns(Level levelLoaded)
+    private void ResetTurns()
     {
         turnCount = 0;
     }

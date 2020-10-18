@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private LevelManager levelManager;
 
-    void Awake()
+    void Start()
     {
         // Automatically set fields
         if (!player)

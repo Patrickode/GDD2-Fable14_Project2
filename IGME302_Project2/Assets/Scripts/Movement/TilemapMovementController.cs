@@ -1,12 +1,32 @@
 ﻿using UnityEngine;
 using System;
 
-public class TilemapMovementController : MonoBehaviour, IMovable
+public class TilemapMovementController : IMovable
 {
-    public Vector2Int Position => transform.position.ToVector2().ToVector2Int();
+    private Transform agent;
+    private Level level;
+    public Vector2Int position;
+
 
     // Triggers every successful move
     public Action<Vector3, Vector3> OnMove;
+
+    /// <summary>
+    /// Constructor for a new Tilemap Movement Controller.
+    /// </summary>
+    /// <param name="agent">Object that will be moved along the tilemap.</param>
+    /// <param name="level">Level the controller will use to calculate movement.</param>
+    public TilemapMovementController(Transform agent, Level level)
+    {
+        this.agent = agent;
+        this.level = level;
+        position = agent.position.ToVector2().ToVector2Int();
+    }
+
+    public void ChangeLevel(Level newLevel)
+    {
+        level = newLevel;
+    }
 
     // Returns whether the tile at position can be moved to
     public bool IsValidMove(Vector2 position)
