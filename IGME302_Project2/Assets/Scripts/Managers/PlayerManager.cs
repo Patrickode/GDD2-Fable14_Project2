@@ -47,6 +47,6 @@ public class PlayerManager : MonoBehaviour
 
     private void ReloadCurrentLevel()
     {
-        levelManager.Load(LevelManager.CurrentLevel.name);
+        LevelManager.LoadLevelByPrefab?.Invoke(null);
     }
 }

@@ -19,6 +19,7 @@ public class Player : MovingEntity
     private int aimingAbilityIndex = -1;
 
     public static Action<Ability, int> UseAbility;
+    public Action OnDeath;
 
     void OnEnable()
     {

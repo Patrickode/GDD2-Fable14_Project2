@@ -13,11 +13,12 @@ public class MovingEntity : MonoBehaviour, IMovable
         get => tileMoveController;
         set => tileMoveController = value;
     }
-    public Vector2Int Position => TileMoveController.Position;
+    public Vector2Int Position => TileMoveController ? TileMoveController.Position
+        : new Vector2Int(int.MinValue, int.MinValue);
     public Action<Vector3, Vector3> OnMove
     {
-        get => TileMoveController.OnMove;
-        set => TileMoveController.OnMove = value;
+        get => TileMoveController ? TileMoveController.OnMove : null;
+        set { if (TileMoveController) { TileMoveController.OnMove = value; } }
     }
 
     public Action OnMoveControllerSetup;
