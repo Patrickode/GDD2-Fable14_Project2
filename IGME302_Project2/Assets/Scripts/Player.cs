@@ -23,6 +23,7 @@ public class Player : MovingEntity
 
     void OnEnable()
     {
+        Debug.LogWarning("Aiming arrows are not assigned to player.");
         controls.Enable();
     }
     void OnDisable()
@@ -93,7 +94,7 @@ public class Player : MovingEntity
             abilities[aimingAbilityIndex].Activate(this, moveInput.ToVector2Int());
             UseAbility?.Invoke(abilities[aimingAbilityIndex], aimingAbilityIndex);
 
-            aimingArrows.SetActive(false);
+            if (aimingArrows) { aimingArrows.SetActive(false); }
             aimingAbilityIndex = -1;
         }
     }
@@ -117,7 +118,7 @@ public class Player : MovingEntity
             //...and this ability is aimable, start aiming this ability.
             if (abilityToActivate.isAimable)
             {
-                aimingArrows.SetActive(true);
+                if (aimingArrows) { aimingArrows.SetActive(true); }
                 aimingAbilityIndex = indexToActivate;
             }
             //Otherwise, just activate it.
@@ -130,7 +131,7 @@ public class Player : MovingEntity
         //If we are aiming an ability, cancel aiming.
         else
         {
-            aimingArrows.SetActive(false);
+            if (aimingArrows) { aimingArrows.SetActive(false); }
             aimingAbilityIndex = -1;
         }
     }
