@@ -19,8 +19,15 @@ public class UseLevelInfo : MonoBehaviour
         LevelManager.OnLoaded -= PopulateWithLevelInfo;
     }
 
+    private void Start()
+    {
+        PopulateWithLevelInfo(LevelManager.CurrentLevel);
+    }
+
     private void PopulateWithLevelInfo(Level levelInfoSource)
     {
+        if (!levelInfoSource) { return; }
+
         //If the destination is a header, get the level name. Otherwise, get the level description.
         levelInfoDestination.text = isHeader ? levelInfoSource.levelName : levelInfoSource.description;
     }
