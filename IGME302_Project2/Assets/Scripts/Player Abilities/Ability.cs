@@ -10,6 +10,10 @@ public abstract class Ability : MonoBehaviour
     /// How many more times this ability can be used.
     /// </summary>
     [HideInInspector] public int usagesLeft;
+    /// <summary>
+    /// The icon that represents this ability.
+    /// </summary>
+    public Sprite icon;
 
     /// <summary>
     /// Perform whatever logic this ability does.
