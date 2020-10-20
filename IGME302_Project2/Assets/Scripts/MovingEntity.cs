@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovingEntity : MonoBehaviour, IMovable
 {
-    private TilemapMovementController tileMoveController;
+    public TilemapMovementController tileMoveController;
 
     private Level currentLevel;
     public Level CurrentLevel

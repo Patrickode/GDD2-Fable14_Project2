@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
 using System;
-using System.Drawing;
 
 public class TilemapMovementController : IMovable
 {
     private Transform agent;
     private Level level;
-    private Point position;
-
-    public Point Position => position;
+    public Vector2Int position;
 
 
     public Action OnMove;
@@ -22,9 +19,7 @@ public class TilemapMovementController : IMovable
     {
         this.agent = agent;
         this.level = level;
-
-        position = new Point();
-        UpdatePosition(agent.position);
+        position = agent.position.ToVector2().ToVector2Int();
     }
 
     public void ChangeLevel(Level newLevel)
@@ -50,7 +45,7 @@ public class TilemapMovementController : IMovable
         if (!IsCollision(newPosition))
         {
             agent.position = newPosition;
-            UpdatePosition(newPosition);
+            position = agent.position.ToVector2().ToVector2Int();
             OnMove?.Invoke();
         }
     }
@@ -64,14 +59,7 @@ public class TilemapMovementController : IMovable
         if (!IsCollision(position))
         {
             agent.position = position;
-            UpdatePosition(position);
-
+            this.position = position.ToVector2Int();
         }
-    }
-
-    private void UpdatePosition(Vector3 newPosition)
-    {
-        position.X = (int)newPosition.x;
-        position.Y = (int)newPosition.y;
     }
 }
