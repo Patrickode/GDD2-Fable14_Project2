@@ -23,7 +23,7 @@ public class Player : MovingEntity
 
     void OnEnable()
     {
-        Debug.LogWarning("Aiming arrows are not assigned to player.");
+        if (!aimingArrows) { Debug.LogWarning("Aiming arrows are not assigned to player."); }
         controls.Enable();
     }
     void OnDisable()
