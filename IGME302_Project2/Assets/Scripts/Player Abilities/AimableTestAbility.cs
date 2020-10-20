@@ -1,18 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AimableTestAbility : Ability
 {
-    public AimableTestAbility()
-    {
-        isAimable = true;
-    }
+    public override void Init() { isAimable = true; }
 
-    public override void Activate(Vector2Int direction = default)
+    public override void Activate(MovingEntity user, Vector2Int direction = default)
     {
-        base.Activate(direction);
-
         Debug.Log("You aimed and did a theurgy thing!");
+
+        usagesLeft--;
     }
 }

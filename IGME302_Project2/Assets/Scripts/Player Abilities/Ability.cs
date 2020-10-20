@@ -10,10 +10,20 @@ public abstract class Ability : MonoBehaviour
     /// How many more times this ability can be used.
     /// </summary>
     [HideInInspector] public int usagesLeft;
+    /// <summary>
+    /// The icon that represents this ability.
+    /// </summary>
+    public Sprite icon;
 
     /// <summary>
-    /// Activate this ability and reduce its usages by one.
+    /// Perform whatever logic this ability does.
     /// </summary>
-    /// <param name="direction">The direction to activate in, if this ability is aimable.</param>
-    public virtual void Activate(Vector2Int direction = default) { usagesLeft--; }
+    /// <param name="user">The entity that activated this ability.</param>
+    /// <param name="direction">The direction to activate this ability in, if it's aimable.</param>
+    public abstract void Activate(MovingEntity user, Vector2Int direction = default);
+
+    /// <summary>
+    /// Initialize this ability. Sets whether the ability is aimable or not.
+    /// </summary>
+    public abstract void Init();
 }

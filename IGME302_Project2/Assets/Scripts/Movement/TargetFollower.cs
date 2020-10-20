@@ -1,45 +1,43 @@
-﻿using UnityEngine;
-using System.Linq;
+﻿using System;
+using UnityEngine;
 
 public class TargetFollower : MonoBehaviour
 {
     [SerializeField]
-    public Transform target;
-    [SerializeField]
-    public float followSpeed = 10f;
-
-    void Start()
+    private Transform target;
+    public Transform Target
     {
-        // Set target automatically if not set in the Inspector
-        if (target == null)
+        get => target;
+        set
         {
-            // Grab the first object tagged as "Target"
-            target = transform.Cast<Transform>().ToList().Find(t => t.tag == "FollowTarget");
-        }
-        
-        // Change the target's parent so it does not shift with its follower.
-        // Parented to TargetManager in case targets should be manipulated in the future
-        if (target != null)
-        {
-            target.parent = null;
-
-            Transform targetManager = GameObject.Find("TargetManager").transform;
-            if (targetManager != null)
-                target.parent = targetManager;
-        }
-        else
-        {
-            Debug.LogError("Dev Error: No target attached to {" + this + "} it may cause problems in related movement scripts.");
+            OnTargetChanged?.Invoke(Target, value);
+            target = value;
         }
     }
+    public float followSpeed = 10f;
+
+    /// <summary>
+    /// Event that fires whenever the target is changed.
+    /// First Transform is the old target.
+    /// Second Transform is the new target.
+    /// </summary>
+    public Action<Transform, Transform> OnTargetChanged;
 
     void Update()
     {
-        if (target != null)
+        // Move towards the target at all times if there is any
+        if (Target)
         {
-            Vector3 newPosition = Vector3.Lerp(transform.position, target.position, followSpeed * Time.deltaTime);
+            Vector3 newPosition = Vector3.Lerp(transform.position, Target.position, followSpeed * Time.deltaTime);
+            // Follower keeps its z position
             newPosition.z = transform.position.z;
             transform.position = newPosition; 
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (Target)
+            Destroy(Target.gameObject);
     }
 }
