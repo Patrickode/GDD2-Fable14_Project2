@@ -13,12 +13,12 @@ public class UpdateAbilityUI : MonoBehaviour
     private void Awake()
     {
         LevelManager.OnLoaded += UpdateAbilities;
-        Player.UseAbility += UpdateUsages;
+        Player.OnAbility += UpdateUsages;
     }
     private void OnDestroy()
     {
         LevelManager.OnLoaded -= UpdateAbilities;
-        Player.UseAbility -= UpdateUsages;
+        Player.OnAbility -= UpdateUsages;
     }
 
     private void UpdateAbilities(Level loadedLevel)
