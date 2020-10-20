@@ -18,7 +18,8 @@ public class Player : MovingEntity
     /// </summary>
     private int aimingAbilityIndex = -1;
 
-    public static Action<Ability, int> UseAbility;
+    public static Action<Ability, int> OnAbility;
+    public static Action<Vector3> OnAimedAbility;
     public Action OnDeath;
 
     void OnEnable()
@@ -92,7 +93,8 @@ public class Player : MovingEntity
         else
         {
             abilities[aimingAbilityIndex].Activate(this, moveInput.ToVector2Int());
-            UseAbility?.Invoke(abilities[aimingAbilityIndex], aimingAbilityIndex);
+            OnAbility?.Invoke(abilities[aimingAbilityIndex], aimingAbilityIndex);
+            OnAimedAbility?.Invoke(moveInput);
 
             if (aimingArrows) { aimingArrows.SetActive(false); }
             aimingAbilityIndex = -1;
@@ -125,7 +127,7 @@ public class Player : MovingEntity
             else
             {
                 abilityToActivate.Activate(this);
-                UseAbility?.Invoke(abilityToActivate, indexToActivate);
+                OnAbility?.Invoke(abilityToActivate, indexToActivate);
             }
         }
         //If we are aiming an ability, cancel aiming.
