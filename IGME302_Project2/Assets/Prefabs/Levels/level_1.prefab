@@ -15138,7 +15138,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelName: Level 1
-  description: Walk right to find the end.
+  description: '"What just happened? Where am I? I don''t recognize this part of
+    the woods..."
+
+
+    Use the WASD keys to move.'
   floor: {fileID: 514304581342535821}
   colliders: {fileID: 514304581783916335}
   ceiling: {fileID: 8236984267858902309}
