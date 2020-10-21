@@ -632,7 +632,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 438205606}
   followSpeed: 10
-  targetContainer: {fileID: 0}
 --- !u!114 &438205605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,7 +700,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 438205606}
   followSpeed: 10
-  targetContainer: {fileID: 0}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
