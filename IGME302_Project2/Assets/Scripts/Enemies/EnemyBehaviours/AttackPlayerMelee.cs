@@ -36,7 +36,14 @@ public class AttackPlayerMelee : EnemyBehaviour
 
     private bool OnMeleeRange()
     {
-        // Distance to the player is equal to 1?
-        return Mathf.CeilToInt(Vector2Int.Distance(enemy.TileMoveController.Position, player.TileMoveController.Position)) == 1;
+        //Avoid errors on scene reload by bailing out if TileMoveController is null.
+        if (enemy.TileMoveController && player.TileMoveController)
+        {
+            // Distance to the player is equal to 1?
+            return Mathf.CeilToInt(
+                Vector2Int.Distance(enemy.TileMoveController.Position, player.TileMoveController.Position)
+            ) == 1;
+        }
+        return false;
     }
 }
