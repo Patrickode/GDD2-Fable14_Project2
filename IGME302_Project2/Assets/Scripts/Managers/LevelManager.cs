@@ -4,6 +4,8 @@ using UnityEditor;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] private Level startLevel = null;
+
     public static Level CurrentLevel { get; private set; }
 
     public static Action<Level> OnLoaded;
@@ -32,9 +34,11 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        // For Testing Purposes Load the Test Level on Start
-        // To be removed once main menu and first real level is implemented
-        Load("TestLevel");
+        if (startLevel) { Load(startLevel); }
+        else
+        {
+            Debug.LogError("LevelManager: No start level was assigned. The game needs a level to start with.");
+        }
     }
 
     // Loads a level with a string by finding it in the Prefab/Levels folder
