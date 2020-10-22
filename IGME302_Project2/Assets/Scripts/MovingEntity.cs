@@ -15,10 +15,26 @@ public class MovingEntity : MonoBehaviour, IMovable
     }
     public Vector2Int Position => TileMoveController ? TileMoveController.Position
         : new Vector2Int(int.MinValue, int.MinValue);
+
     public Action<Vector3, Vector3> OnMove
     {
-        get => TileMoveController ? TileMoveController.OnMove : null;
-        set { if (TileMoveController) { TileMoveController.OnMove = value; } }
+        get
+        {
+            if (TileMoveController) { return TileMoveController.OnMove; }
+            else
+            {
+                Debug.LogError("Cannot get OnMove; TileMoveController is null.");
+                return null;
+            }
+        }
+        set
+        {
+            if (TileMoveController) { TileMoveController.OnMove = value; }
+            else
+            {
+                Debug.LogError("Cannot set OnMove; TileMoveController is null.");
+            }
+        }
     }
 
     public Action OnMoveControllerSetup;
