@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour
     private void OnEnable()
     {
         LevelManager.OnLoaded += InitPlayer;
-        player.OnMove += CheckLevelGoalReached;
+        player.OnMoveControllerSetup += SetUpPlayerOnMove;
         player.OnDeath += ReloadCurrentLevel;
     }
 
@@ -37,6 +37,11 @@ public class PlayerManager : MonoBehaviour
         player.MoveTo(loadedLevel.spawnPoint);
         //Set/Reset the player's abilities
         player.SetAbilities(loadedLevel.abilitySet);
+    }
+
+    private void SetUpPlayerOnMove()
+    {
+        player.OnMove += CheckLevelGoalReached;
     }
 
     private void CheckLevelGoalReached(Vector3 oldPosition, Vector3 newPosition)

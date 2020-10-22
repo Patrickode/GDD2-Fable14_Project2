@@ -54,7 +54,7 @@ public class MovingEntity : MonoBehaviour, IMovable
     /// <param name="displacement">The amount and direction to try and move in.</param>
     public virtual void Move(Vector2 displacement)
     {
-        if (targetFollower.Target)
+        if (targetFollower.Target && TileMoveController)
             TileMoveController.Move(displacement);
     }
 
@@ -64,7 +64,7 @@ public class MovingEntity : MonoBehaviour, IMovable
     /// <param name="position">The position to try and move to.</param>
     public virtual void MoveTo(Vector2 position)
     {
-        if (TileMoveController.IsValidMove(position))
+        if (TileMoveController && TileMoveController.IsValidMove(position))
         {
             transform.position = (Vector3)position;
             TileMoveController.MoveTo(position);
