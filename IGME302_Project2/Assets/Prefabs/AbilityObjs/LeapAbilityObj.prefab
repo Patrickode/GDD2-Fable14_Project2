@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAimable: 1
-  usagesLeft: 0
+  usagesLeft: 2
+  icon: {fileID: 3974459675917803526, guid: c022ee5a8cc035643b1760a3b56ceaf7, type: 3}
   leapDistance: 3

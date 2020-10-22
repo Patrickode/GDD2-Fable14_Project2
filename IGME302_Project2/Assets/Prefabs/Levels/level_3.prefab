@@ -24980,7 +24980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelName: Level 3
-  description: Shoot the enemy to reach the end.
+  description: '"The game here looks...different."'
   floor: {fileID: 3022184484558167237}
   colliders: {fileID: 2388041633370339647}
   ceiling: {fileID: 2151091587967071523}
@@ -24988,9 +24988,9 @@ MonoBehaviour:
   abilitySet:
   - ability: {fileID: -5299013442601749254, guid: ffc1c4d96eb576c439f1f73810e6ddf1,
       type: 3}
-    usages: 10
-  spawnPoint: {x: 0, y: 0}
-  goal: {x: 31, y: 0}
+    usages: 5
+  spawnPoint: {x: -3, y: -1}
+  goal: {x: 28, y: 0}
   nextLevel: {fileID: 0}
 --- !u!1 &2890394428656775179
 GameObject:
