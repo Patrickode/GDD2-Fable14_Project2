@@ -24,23 +24,12 @@ public class TurnManager : MonoBehaviour
     private void OnEnable()
     {
         LevelManager.OnLoaded += ResetTurns;
-        player.OnMoveControllerSetup += SetIncreaseTurnCallback;
+        player.OnMove += IncreaseTurn;
     }
 
     private void OnDisable()
     {
         LevelManager.OnLoaded -= ResetTurns;
-        player.OnMoveControllerSetup -= SetIncreaseTurnCallback;
-        UnsetIncreaseTurnCallback();
-    }
-
-    private void SetIncreaseTurnCallback()
-    {
-        player.OnMove += IncreaseTurn;
-    }
-
-    private void UnsetIncreaseTurnCallback()
-    {
         player.OnMove -= IncreaseTurn;
     }
 
