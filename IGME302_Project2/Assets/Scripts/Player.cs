@@ -12,6 +12,8 @@ public class Player : MovingEntity
     private PlayerControls controls;
     private List<Ability> abilities;
 
+    public bool logPosition = false;
+
     private bool canAct = true;
     /// <summary>
     /// The index of the ability the player is currently aiming. Equals -1 if not aiming an ability.
@@ -26,10 +28,13 @@ public class Player : MovingEntity
     {
         if (!aimingArrows) { Debug.LogWarning("Aiming arrows are not assigned to player."); }
         controls.Enable();
+
+        OnMove += LogCurrentPosition;
     }
     void OnDisable()
     {
         controls.Disable();
+        OnMove -= LogCurrentPosition;
     }
 
     protected override void Awake()
@@ -72,6 +77,12 @@ public class Player : MovingEntity
         controls.Movement.Ability6.performed -= _ => TryActivateAbility(6);
 
         PauseManager.PauseGame -= paused => canAct = !paused;
+    }
+
+    private void LogCurrentPosition(Vector3 oldPosition, Vector3 newPosition)
+    {
+        if (logPosition)
+            Debug.Log($"({newPosition.x}, {newPosition.y})");
     }
 
     /// <summary>

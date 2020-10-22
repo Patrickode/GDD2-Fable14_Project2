@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class ClearObstacle : PressurePlateEffect
+public class ClearObstacle : LevelEffect
 {
     [SerializeField]
-    private List<Vector2Int> colliderPositions;
+    private List<Vector2Int> colliderPositions = new List<Vector2Int>();
 
     private Tilemap Colliders => LevelManager.CurrentLevel.colliders;
 
