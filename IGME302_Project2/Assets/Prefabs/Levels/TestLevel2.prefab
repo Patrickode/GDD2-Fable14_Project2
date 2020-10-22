@@ -364,7 +364,7 @@ MonoBehaviour:
   - ability: {fileID: 7695918135677045314, guid: a3a6acc42f37a7044998c3743a1c6188,
       type: 3}
     usages: 2
-  spawnPoint: {x: -3, y: -1}
+  spawnPoint: {x: 0, y: -3}
   goal: {x: 5, y: 0}
   nextLevel: {fileID: 3239226508643298791, guid: be931d8161b641a419e45e58134b12f7,
     type: 3}

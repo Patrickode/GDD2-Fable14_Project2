@@ -17,19 +17,16 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        LoadLevelByPrefab += lvl =>
-        {
-            if (lvl) { Load(lvl); }
-            else { Load(CurrentLevel.name); }
-        };
+        LoadLevelByPrefab += OnLoadByPrefab;
     }
     private void OnDestroy()
     {
-        LoadLevelByPrefab -= lvl =>
-        {
-            if (lvl) { Load(lvl); }
-            else { Load(CurrentLevel.name); }
-        };
+        LoadLevelByPrefab -= OnLoadByPrefab;
+    }
+    private void OnLoadByPrefab(Level lvl)
+    {
+        if (lvl) { Load(lvl); }
+        else { Load(CurrentLevel.name); }
     }
 
     private void Start()

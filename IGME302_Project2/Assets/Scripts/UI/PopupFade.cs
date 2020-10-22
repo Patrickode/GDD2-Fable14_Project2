@@ -27,19 +27,11 @@ public class PopupFade : MonoBehaviour
         foreach (Image backdrop in backdrops) { backdropAlphas.Add(backdrop.color.a); }
         foreach (TextMeshProUGUI textField in textFields) { textAlphas.Add(textField.color.a); }
 
-        LevelManager.OnLoaded += _ =>
-        {
-            TryStopCoroutine(fadeCoroutine);
-            fadeCoroutine = StartCoroutine(FadeInOut());
-        };
+        LevelManager.OnLoaded += ResetFade;
     }
     private void OnDestroy()
     {
-        LevelManager.OnLoaded -= _ =>
-        {
-            TryStopCoroutine(fadeCoroutine);
-            fadeCoroutine = StartCoroutine(FadeInOut());
-        };
+        LevelManager.OnLoaded -= ResetFade;
     }
 
     private IEnumerator FadeInOut()
@@ -87,9 +79,10 @@ public class PopupFade : MonoBehaviour
         fadeCoroutine = null;
     }
 
-    private void TryStopCoroutine(Coroutine coroutineToStop)
+    private void ResetFade(Level _)
     {
-        if (coroutineToStop != null) { StopCoroutine(coroutineToStop); }
+        if (fadeCoroutine != null) { StopCoroutine(fadeCoroutine); }
+        fadeCoroutine = StartCoroutine(FadeInOut());
     }
 
     private void LerpAlphas(Image[] arrayWithAlphas, float from, float to, float t)
