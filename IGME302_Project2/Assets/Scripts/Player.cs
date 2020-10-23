@@ -21,7 +21,6 @@ public class Player : MovingEntity
     private int aimingAbilityIndex = -1;
 
     public static Action<Ability, int> OnAbility;
-    public static Action<Vector3> OnAimedAbility;
     public Action OnDeath;
 
     void OnEnable()
@@ -105,7 +104,6 @@ public class Player : MovingEntity
         {
             abilities[aimingAbilityIndex].Activate(this, moveInput.ToVector2Int());
             OnAbility?.Invoke(abilities[aimingAbilityIndex], aimingAbilityIndex);
-            OnAimedAbility?.Invoke(moveInput);
 
             if (aimingArrows) { aimingArrows.SetActive(false); }
             aimingAbilityIndex = -1;

@@ -11,6 +11,10 @@ public abstract class Ability : MonoBehaviour
     /// </summary>
     [HideInInspector] public int usagesLeft;
     /// <summary>
+    /// The direction this ability is being used in. Only set if aimable.
+    /// </summary>
+    [HideInInspector] public Vector2 direction;
+    /// <summary>
     /// The icon that represents this ability.
     /// </summary>
     public Sprite icon;

@@ -11,6 +11,6 @@ public class Arrow : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(transform.up * arrowSpeed * Time.deltaTime, Space.World);
+        transform.Translate(transform.right * arrowSpeed * Time.deltaTime, Space.World);
     }
 }

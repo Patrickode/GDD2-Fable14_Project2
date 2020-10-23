@@ -17,7 +17,7 @@ public class UpdateFacing : MonoBehaviour
         thisEntity.OnMove += UpdateFacingSprite;
         if (thisEntity is Player)
         {
-            Player.OnAimedAbility += UpdateFacingSprite;
+            Player.OnAbility += UpdateIfAimed;
         }
     }
     private void OnDestroy()
@@ -25,8 +25,12 @@ public class UpdateFacing : MonoBehaviour
         thisEntity.OnMove -= UpdateFacingSprite;
         if (thisEntity is Player)
         {
-            Player.OnAimedAbility -= UpdateFacingSprite;
+            Player.OnAbility -= UpdateIfAimed;
         }
+    }
+    private void UpdateIfAimed(Ability ability, int _)
+    {
+        if (ability.isAimable) { UpdateFacingSprite(ability.direction); }
     }
 
     private void UpdateFacingSprite(Vector3 fromPos, Vector3 toPos)
