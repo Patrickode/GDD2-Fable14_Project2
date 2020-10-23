@@ -16,7 +16,8 @@ public class ArrowAbility : Ability
         Instantiate(
             arrowPrefab,
             user.transform.position + (Vector3)arrowDir,
-            Quaternion.LookRotation(Vector3.forward, arrowDir)
+            //We want the arrow's right to be facing toward arrowDir. Use cross product to get that right vector
+            Quaternion.LookRotation(Vector3.forward, Vector3.Cross(Vector3.forward, arrowDir))
         );
 
         usagesLeft--;
