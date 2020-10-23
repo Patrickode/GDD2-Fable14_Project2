@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -42,7 +43,17 @@ public class PlayerManager : MonoBehaviour
     private void CheckLevelGoalReached(Vector3 oldPosition, Vector3 newPosition)
     {
         if (newPosition.ToVector2().ToVector2Int() == LevelManager.CurrentLevel.goal)
-            levelManager.Load(LevelManager.CurrentLevel.nextLevel);
+        {
+            Level nextLevel = LevelManager.CurrentLevel.nextLevel;
+            if (nextLevel)
+            {
+                levelManager.Load(nextLevel);
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+        }
     }
 
     private void ReloadCurrentLevel()
