@@ -11,6 +11,7 @@ public class ArrowAbility : Ability
 
     public override void Activate(MovingEntity user, Vector2Int direction = default)
     {
+        this.direction = direction;
         Vector2 arrowDir = (Vector2)direction * arrowStartOffset;
 
         Instantiate(
