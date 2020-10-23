@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -8,40 +9,55 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private LevelManager levelManager;
 
-    void Start()
+    void Awake()
     {
         // Automatically set fields
         if (!player)
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (!levelManager)
-            levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+            levelManager = FindObjectOfType<LevelManager>();
+    }
 
-        // Attach level to player every time it is changed
-        if (levelManager)
+    private void OnEnable()
+    {
+        LevelManager.OnLoaded += InitPlayer;
+        player.OnMove += CheckLevelGoalReached;
+        player.OnDeath += ReloadCurrentLevel;
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.OnLoaded -= InitPlayer;
+        player.OnMove -= CheckLevelGoalReached;
+        player.OnDeath -= ReloadCurrentLevel;
+    }
+
+    private void InitPlayer(Level loadedLevel)
+    {
+        // Spawn player at the level's spawn point
+        player.MoveTo(loadedLevel.spawnPoint);
+        //Set/Reset the player's abilities
+        player.SetAbilities(loadedLevel.abilitySet);
+    }
+
+    private void CheckLevelGoalReached(Vector3 oldPosition, Vector3 newPosition)
+    {
+        if (newPosition.ToVector2().ToVector2Int() == LevelManager.CurrentLevel.goal)
         {
-            LevelManager.OnLoaded += loadedLevel =>
+            Level nextLevel = LevelManager.CurrentLevel.nextLevel;
+            if (nextLevel)
             {
-                if (player)
-                    player.CurrentLevel = loadedLevel;
-
-                // Spawn player at the level's spawn point
-                player.MoveTo(loadedLevel.spawnPoint);
-                //Set/Reset the player's abilities
-                player.SetAbilities(loadedLevel.abilitySet);
-            };
-        }
-
-        // Check if the player has reached the goal every move
-        // If they have, load the next level
-        if (player && levelManager)
-        {
-            player.OnMove += () =>
+                levelManager.Load(nextLevel);
+            }
+            else
             {
-                if (player.tileMoveController.position == levelManager.currentLevel.goal)
-                {
-                    levelManager.Load(levelManager.currentLevel.nextLevel);
-                }
-            };
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
         }
+    }
+
+    private void ReloadCurrentLevel()
+    {
+        LevelManager.LoadLevelByPrefab?.Invoke(null);
     }
 }

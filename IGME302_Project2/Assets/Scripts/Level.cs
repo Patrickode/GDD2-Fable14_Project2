@@ -14,6 +14,7 @@ public class Level : MonoBehaviour
     public Tilemap floor;
     public Tilemap colliders;
     public Tilemap ceiling;
+    public List<Enemy> enemies;
 
     [Space(10)]
     public AbilityInstance[] abilitySet;
@@ -30,24 +31,18 @@ public class Level : MonoBehaviour
     {
         OnLoad += SetLevelTilemap;
 
-        if (abilitySet.Length < 1)
+        enemies = GetComponentsInChildren<Enemy>().ToList();
+
+        for (int i = 0; i < abilitySet.Length; i++)
         {
-            Debug.LogWarning($"{levelName}: No abilities are assigned; the player can only move. Did you " +
-                $"forget to set up {levelName}'s ability set?");
-        }
-        else
-        {
-            for (int i = 0; i < abilitySet.Length; i++)
+            if (!abilitySet[i].ability)
             {
-                if (!abilitySet[i].ability)
-                {
-                    Debug.LogError($"{levelName}: Ability at playerAbilities[{i}] isn't assigned! Make sure to " +
-                        $"assign an ability to each index of {levelName}'s ability set.");
-                }
-                else
-                {
-                    abilitySet[i].ability.Init();
-                }
+                Debug.LogError($"{levelName}: Ability at playerAbilities[{i}] isn't assigned! Make sure to " +
+                    $"assign an ability to each index of {levelName}'s ability set.");
+            }
+            else
+            {
+                abilitySet[i].ability.Init();
             }
         }
     }
@@ -66,9 +61,6 @@ public class Level : MonoBehaviour
         if (colliders == null)
             colliders = children.Find(child => child.CompareTag("ColliderTilemap"))?.GetComponent<Tilemap>();
         if (ceiling == null)
-        {
             ceiling = children.Find(child => child.CompareTag("CeilingTilemap"))?.GetComponent<Tilemap>();
-            Debug.Log(ceiling);
-        }
     }
 }

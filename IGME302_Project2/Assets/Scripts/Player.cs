@@ -1,27 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(TargetFollower))]
 public class Player : MovingEntity
 {
+    [Space(10)]
+    [SerializeField] private GameObject aimingArrows = null;
+
     private PlayerControls controls;
     private List<Ability> abilities;
 
-    private bool canAct = true;
+    public bool logPosition = false;
 
+    private bool canAct = true;
     /// <summary>
-    /// The ability the player is currently aiming. Null if not aiming an ability.
+    /// The index of the ability the player is currently aiming. Equals -1 if not aiming an ability.
     /// </summary>
-    private Ability aimingAbility = null;
+    private int aimingAbilityIndex = -1;
+
+    public static Action<Ability, int> OnAbility;
+    public Action OnDeath;
 
     void OnEnable()
     {
+        if (!aimingArrows) { Debug.LogWarning("Aiming arrows are not assigned to player."); }
         controls.Enable();
+
+        OnMove += LogCurrentPosition;
     }
     void OnDisable()
     {
         controls.Disable();
+        OnMove -= LogCurrentPosition;
     }
 
     protected override void Awake()
@@ -66,6 +78,12 @@ public class Player : MovingEntity
         PauseManager.PauseGame -= paused => canAct = !paused;
     }
 
+    private void LogCurrentPosition(Vector3 oldPosition, Vector3 newPosition)
+    {
+        if (logPosition)
+            Debug.Log($"({newPosition.x}, {newPosition.y})");
+    }
+
     /// <summary>
     /// Move if not aiming, and activate an ability in a direction if aiming.
     /// </summary>
@@ -76,7 +94,7 @@ public class Player : MovingEntity
         if (!canAct) { return; }
 
         //If not aiming an ability, move as normal.
-        if (!aimingAbility)
+        if (aimingAbilityIndex < 0)
         {
             Move(moveInput);
         }
@@ -84,8 +102,11 @@ public class Player : MovingEntity
         //Set it to null afterwards because we're not aiming it anymore.
         else
         {
-            aimingAbility.Activate(this, moveInput.ToVector2Int());
-            aimingAbility = null;
+            abilities[aimingAbilityIndex].Activate(this, moveInput.ToVector2Int());
+            OnAbility?.Invoke(abilities[aimingAbilityIndex], aimingAbilityIndex);
+
+            if (aimingArrows) { aimingArrows.SetActive(false); }
+            aimingAbilityIndex = -1;
         }
     }
 
@@ -100,24 +121,29 @@ public class Player : MovingEntity
 
         //Get the ability to activate from the given index, and bail out if it has no uses left.
         Ability abilityToActivate = abilities[indexToActivate];
-        if (abilityToActivate.usagesLeft <= 0) { Debug.Log("This ability has no uses left."); return; }
+        if (abilityToActivate.usagesLeft <= 0) { return; }
 
-        //If we're already aiming this ability, cancel aiming.
-        if (abilityToActivate.Equals(aimingAbility))
+        //If we're not aiming an ability already...
+        if (aimingAbilityIndex < 0)
         {
-            Debug.Log("Cancelled aiming.");
-            aimingAbility = null;
+            //...and this ability is aimable, start aiming this ability.
+            if (abilityToActivate.isAimable)
+            {
+                if (aimingArrows) { aimingArrows.SetActive(true); }
+                aimingAbilityIndex = indexToActivate;
+            }
+            //Otherwise, just activate it.
+            else
+            {
+                abilityToActivate.Activate(this);
+                OnAbility?.Invoke(abilityToActivate, indexToActivate);
+            }
         }
-        //Otherwise, start aiming the ability if it's aimable,
-        else if (abilities[indexToActivate].isAimable)
-        {
-            Debug.Log("Aiming...");
-            aimingAbility = abilities[indexToActivate];
-        }
-        //or just activate it if it's not.
+        //If we are aiming an ability, cancel aiming.
         else
         {
-            abilityToActivate.Activate(this);
+            if (aimingArrows) { aimingArrows.SetActive(false); }
+            aimingAbilityIndex = -1;
         }
     }
 

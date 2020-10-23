@@ -1,38 +1,38 @@
 ﻿using UnityEngine;
 using System;
 
-public class TilemapMovementController : IMovable
+public class TilemapMovementController : MonoBehaviour, IMovable
 {
-    private Transform agent;
-    private Level level;
-    public Vector2Int position;
+    public Vector2Int Position => transform.position.ToVector2().ToVector2Int();
 
-
-    public Action OnMove;
-
-    /// <summary>
-    /// Constructor for a new Tilemap Movement Controller.
-    /// </summary>
-    /// <param name="agent">Object that will be moved along the tilemap.</param>
-    /// <param name="level">Level the controller will use to calculate movement.</param>
-    public TilemapMovementController(Transform agent, Level level)
-    {
-        this.agent = agent;
-        this.level = level;
-        position = agent.position.ToVector2().ToVector2Int();
-    }
-
-    public void ChangeLevel(Level newLevel)
-    {
-        level = newLevel;
-    }
+    // Triggers every successful move
+    public Action<Vector3, Vector3> OnMove;
 
     // Returns whether the tile at position can be moved to
-    public bool IsCollision(Vector2 position)
+    public bool IsValidMove(Vector2 position)
     {
-        Vector3Int gridPosition = level.floor.WorldToCell(position);
-        // Ground does not exist or ceiling does not exist or tile is a collider?
-        return !level.floor.HasTile(gridPosition) || level.colliders.HasTile(gridPosition);
+        Vector3Int gridPosition = LevelManager.CurrentLevel.floor.WorldToCell(position);
+
+        // Tile exists in ground
+        // Does not exist in colliders
+        // There is no enemy on top of it
+        if (LevelManager.CurrentLevel.floor.HasTile(gridPosition) &&
+            !LevelManager.CurrentLevel.colliders.HasTile(gridPosition) &&
+            !EnemyAt(position.ToVector2Int()))
+            return true;
+
+        return false;
+    }
+
+    private bool EnemyAt(Vector2Int position)
+    {
+        foreach (Enemy enemy in LevelManager.CurrentLevel.enemies)
+        {
+            if (enemy.Position == position)
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -41,12 +41,12 @@ public class TilemapMovementController : IMovable
     /// <param name="displacement">Which direction and how far to try and move.</param>
     public void Move(Vector2 displacement)
     {
-        Vector3 newPosition = agent.position + (Vector3)displacement;
-        if (!IsCollision(newPosition))
+        Vector3 newPosition = transform.position + (Vector3)displacement;
+        if (IsValidMove(newPosition))
         {
-            agent.position = newPosition;
-            position = agent.position.ToVector2().ToVector2Int();
-            OnMove?.Invoke();
+            Vector3 oldPosition = transform.position;
+            transform.position = newPosition;
+            OnMove?.Invoke(oldPosition, newPosition);
         }
     }
 
@@ -56,10 +56,7 @@ public class TilemapMovementController : IMovable
     /// <param name="position">The position to try and move to.</param>
     public void MoveTo(Vector2 position)
     {
-        if (!IsCollision(position))
-        {
-            agent.position = position;
-            this.position = position.ToVector2Int();
-        }
+        if (IsValidMove(position))
+            transform.position = position;
     }
 }
