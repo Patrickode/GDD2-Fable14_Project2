@@ -477,6 +477,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d4f94e3200baa344b7c415c17623c4f, type: 3}
+--- !u!114 &829958269 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8699892997707203697, guid: 9d4f94e3200baa344b7c415c17623c4f,
+    type: 3}
+  m_PrefabInstance: {fileID: 829958268}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0af7c9b1d5eba2b4eb2ee3e3aa680001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &970878808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -484,14 +496,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 851981293478223100, guid: 5fae99b6ea626ff44879920cab0d2f42,
+    - target: {fileID: 970878810, guid: 5fae99b6ea626ff44879920cab0d2f42, type: 3}
+      propertyPath: musicManager
+      value: 
+      objectReference: {fileID: 1707188907}
+    - target: {fileID: 970878810, guid: 5fae99b6ea626ff44879920cab0d2f42, type: 3}
+      propertyPath: soundEffectsManager
+      value: 
+      objectReference: {fileID: 829958269}
+    - target: {fileID: 970878811, guid: 5fae99b6ea626ff44879920cab0d2f42, type: 3}
+      propertyPath: musicManager
+      value: 
+      objectReference: {fileID: 1707188907}
+    - target: {fileID: 970878811, guid: 5fae99b6ea626ff44879920cab0d2f42, type: 3}
+      propertyPath: soundEffectsManager
+      value: 
+      objectReference: {fileID: 829958269}
+    - target: {fileID: 3144764021802288794, guid: 5fae99b6ea626ff44879920cab0d2f42,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3144764021802288794, guid: 5fae99b6ea626ff44879920cab0d2f42,
         type: 3}
-      propertyPath: m_AnchorMax.y
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3144764021802288794, guid: 5fae99b6ea626ff44879920cab0d2f42,
+        type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042558647971056101, guid: 5fae99b6ea626ff44879920cab0d2f42,
@@ -524,14 +557,19 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7034091127327576643, guid: 5fae99b6ea626ff44879920cab0d2f42,
+    - target: {fileID: 7086029521418464999, guid: 5fae99b6ea626ff44879920cab0d2f42,
         type: 3}
-      propertyPath: m_AnchoredPosition.y
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7086029521418464999, guid: 5fae99b6ea626ff44879920cab0d2f42,
         type: 3}
-      propertyPath: m_AnchorMax.y
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7086029521418464999, guid: 5fae99b6ea626ff44879920cab0d2f42,
+        type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8651135166972573172, guid: 5fae99b6ea626ff44879920cab0d2f42,
@@ -651,40 +689,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fae99b6ea626ff44879920cab0d2f42, type: 3}
---- !u!1 &970878809 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8651135166972573172, guid: 5fae99b6ea626ff44879920cab0d2f42,
-    type: 3}
-  m_PrefabInstance: {fileID: 970878808}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &970878810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 970878809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4510cca1990a9784a91c69b8f21652c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicManager: {fileID: 0}
-  soundEffectsManager: {fileID: 0}
---- !u!114 &970878811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 970878809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b105a1ef920c6584fb47c42d9173c3fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicManager: {fileID: 0}
-  soundEffectsManager: {fileID: 0}
 --- !u!1 &1006143468
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,6 +918,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1b1b405d3fc9f14d8fa061542cbfd07, type: 3}
+--- !u!114 &1707188907 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4764861630063093540, guid: b1b1b405d3fc9f14d8fa061542cbfd07,
+    type: 3}
+  m_PrefabInstance: {fileID: 1707188906}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a0bdddbdd6f52d409238c35ea3d1fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1884114209
 GameObject:
   m_ObjectHideFlags: 0
