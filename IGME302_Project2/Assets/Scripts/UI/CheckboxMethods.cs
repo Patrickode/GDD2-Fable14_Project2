@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class CheckboxMethods : MonoBehaviour
 {
@@ -27,29 +28,15 @@ public class CheckboxMethods : MonoBehaviour
             soundEffectsManagerPrefabAudioSource = soundEffectsManager.soundEffectsManagerPrefab.GetComponent<AudioSource>();
     }
 
-    public void MuteMusic(bool mute)
+    public void MuteMusic(Toggle checkbox)
     {
-        musicManager.SetMute(mute);
-        musicManagerPrefabAudioSource.mute = mute;
+        musicManager.SetMute(checkbox.isOn);
+        musicManagerPrefabAudioSource.mute = checkbox.isOn;
     }
 
-    public void MuteSoundEffects(bool mute)
+    public void MuteSoundEffects(Toggle checkbox)
     {
-        soundEffectsManager.SetMute(mute);
-        soundEffectsManagerPrefabAudioSource.mute = mute;
-    }
-
-    public void ToggleMuteMusic()
-    {
-        musicManager.ToggleMute();
-        musicManagerPrefabAudioSource.mute = !musicManagerPrefabAudioSource.mute;
-    }
-
-    private void Update()
-    {
-        if (Keyboard.current.mKey.wasPressedThisFrame)
-        {
-            ToggleMuteMusic();
-        }
+        soundEffectsManager.SetMute(checkbox.isOn);
+        soundEffectsManagerPrefabAudioSource.mute = checkbox.isOn;
     }
 }

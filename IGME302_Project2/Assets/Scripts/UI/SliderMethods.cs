@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class SliderMethods : MonoBehaviour
 {
@@ -26,15 +27,15 @@ public class SliderMethods : MonoBehaviour
             soundEffectsManagerPrefabAudioSource = soundEffectsManager.soundEffectsManagerPrefab.GetComponent<AudioSource>();
     }
 
-    public void SetMusicVolume(float volume)
+    public void SetMusicVolume(Slider slider)
     {
-        musicManager.SetVolume(volume);
-        musicManagerPrefabAudioSource.volume = volume;
+        musicManager.SetVolume(slider.value);
+        musicManagerPrefabAudioSource.volume = slider.value;
     }
 
-    public void SetSoundEffectVolume(float volume)
+    public void SetSoundEffectVolume(Slider slider)
     {
-        soundEffectsManager.SetVolume(volume);
-        soundEffectsManagerPrefabAudioSource.volume = volume;
+        soundEffectsManager.SetVolume(slider.value);
+        soundEffectsManagerPrefabAudioSource.volume = slider.value;
     }
 }
