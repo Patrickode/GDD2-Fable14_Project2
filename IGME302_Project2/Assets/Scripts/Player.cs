@@ -12,6 +12,8 @@ public class Player : MovingEntity
     private PlayerControls controls;
     private List<Ability> abilities;
 
+    public bool logPosition = false;
+
     private bool canAct = true;
     /// <summary>
     /// The index of the ability the player is currently aiming. Equals -1 if not aiming an ability.
@@ -19,17 +21,19 @@ public class Player : MovingEntity
     private int aimingAbilityIndex = -1;
 
     public static Action<Ability, int> OnAbility;
-    public static Action<Vector3> OnAimedAbility;
     public Action OnDeath;
 
     void OnEnable()
     {
         if (!aimingArrows) { Debug.LogWarning("Aiming arrows are not assigned to player."); }
         controls.Enable();
+
+        OnMove += LogCurrentPosition;
     }
     void OnDisable()
     {
         controls.Disable();
+        OnMove -= LogCurrentPosition;
     }
 
     protected override void Awake()
@@ -74,6 +78,12 @@ public class Player : MovingEntity
         PauseManager.PauseGame -= paused => canAct = !paused;
     }
 
+    private void LogCurrentPosition(Vector3 oldPosition, Vector3 newPosition)
+    {
+        if (logPosition)
+            Debug.Log($"({newPosition.x}, {newPosition.y})");
+    }
+
     /// <summary>
     /// Move if not aiming, and activate an ability in a direction if aiming.
     /// </summary>
@@ -94,7 +104,6 @@ public class Player : MovingEntity
         {
             abilities[aimingAbilityIndex].Activate(this, moveInput.ToVector2Int());
             OnAbility?.Invoke(abilities[aimingAbilityIndex], aimingAbilityIndex);
-            OnAimedAbility?.Invoke(moveInput);
 
             if (aimingArrows) { aimingArrows.SetActive(false); }
             aimingAbilityIndex = -1;

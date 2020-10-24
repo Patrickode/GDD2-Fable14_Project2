@@ -9,6 +9,8 @@ public class LeapAbility : Ability
 
     public override void Activate(MovingEntity user, Vector2Int direction = default)
     {
+        this.direction = direction;
+
         //Store a reference to a temporary "subtract usages" function
         Action<Vector3, Vector3> subtractUsages = (oldPosition, newPosition) => usagesLeft--;
 

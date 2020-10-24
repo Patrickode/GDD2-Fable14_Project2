@@ -33,24 +33,16 @@ public class Level : MonoBehaviour
 
         enemies = GetComponentsInChildren<Enemy>().ToList();
 
-        if (abilitySet.Length < 1)
+        for (int i = 0; i < abilitySet.Length; i++)
         {
-            Debug.LogWarning($"{levelName}: No abilities are assigned; the player can only move. Did you " +
-                $"forget to set up {levelName}'s ability set?");
-        }
-        else
-        {
-            for (int i = 0; i < abilitySet.Length; i++)
+            if (!abilitySet[i].ability)
             {
-                if (!abilitySet[i].ability)
-                {
-                    Debug.LogError($"{levelName}: Ability at playerAbilities[{i}] isn't assigned! Make sure to " +
-                        $"assign an ability to each index of {levelName}'s ability set.");
-                }
-                else
-                {
-                    abilitySet[i].ability.Init();
-                }
+                Debug.LogError($"{levelName}: Ability at playerAbilities[{i}] isn't assigned! Make sure to " +
+                    $"assign an ability to each index of {levelName}'s ability set.");
+            }
+            else
+            {
+                abilitySet[i].ability.Init();
             }
         }
     }
