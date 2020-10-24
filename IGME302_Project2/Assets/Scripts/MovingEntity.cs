@@ -23,21 +23,28 @@ public class MovingEntity : MonoBehaviour, IMovable
             if (TileMoveController) { return TileMoveController.OnMove; }
             else
             {
-                Debug.LogError("Cannot get OnMove; TileMoveController is null.");
-                return null;
+                if (targetFollower.Target)
+                {
+                    TileMoveController = targetFollower.Target.GetComponent<TilemapMovementController>();
+                    return TileMoveController.OnMove;
+                }
             }
+
+            return null;
         }
         set
         {
             if (TileMoveController) { TileMoveController.OnMove = value; }
             else
             {
-                Debug.LogError("Cannot set OnMove; TileMoveController is null.");
+                if (targetFollower.Target)
+                {
+                    TileMoveController = targetFollower.Target.GetComponent<TilemapMovementController>();
+                    TileMoveController.OnMove = value;
+                }
             }
         }
     }
-
-    public Action OnMoveControllerSetup;
 
     protected virtual void Awake()
     {
@@ -59,8 +66,14 @@ public class MovingEntity : MonoBehaviour, IMovable
             targetFollower.Target = newTarget.transform;
             // Attach a TilemapMovementController to all moving entities' target
             if (targetFollower.Target)
-                TileMoveController = targetFollower.Target.gameObject.AddComponent(typeof(TilemapMovementController)) as TilemapMovementController;
-            OnMoveControllerSetup?.Invoke();
+            {
+                targetFollower.Target.gameObject.AddComponent(typeof(TilemapMovementController));
+                TileMoveController = targetFollower.Target.GetComponent<TilemapMovementController>();
+            }
+            else
+            {
+                Debug.Log("reached!!!");
+            }
         }
     }
 
@@ -85,5 +98,10 @@ public class MovingEntity : MonoBehaviour, IMovable
             transform.position = (Vector3)position;
             TileMoveController.MoveTo(position);
         }
+    }
+
+    private void OnDisable()
+    {
+        OnMove = null;
     }
 }
