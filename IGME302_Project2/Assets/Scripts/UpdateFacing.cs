@@ -7,6 +7,11 @@ public class UpdateFacing : MonoBehaviour
     [SerializeField] private MovingEntity thisEntity = null;
     [SerializeField] private SpriteRenderer rendToUpdate = null;
     [Space(10)]
+    [Tooltip("When facing left, use Right Sprite and set Flip X to true.")]
+    [SerializeField] private bool useFlippedRightForLeft = false;
+    [Tooltip("When facing right, use Left Sprite and set Flip X to true.")]
+    [SerializeField] private bool useFlippedLeftForRight = false;
+    [Space(10)]
     [SerializeField] private Sprite upSprite = null;
     [SerializeField] private Sprite downSprite = null;
     [SerializeField] private Sprite leftSprite = null;
@@ -48,18 +53,24 @@ public class UpdateFacing : MonoBehaviour
         if (Mathf.Approximately(angleFromUp, 0))
         {
             spriteToSwitchTo = upSprite;
+            rendToUpdate.flipX = false;
         }
         else if (Mathf.Approximately(angleFromUp, 180) || Mathf.Approximately(angleFromUp, -180))
         {
             spriteToSwitchTo = downSprite;
+            rendToUpdate.flipX = false;
         }
         else if (Mathf.Approximately(angleFromUp, -90))
         {
-            spriteToSwitchTo = leftSprite;
+            //If using flipped right for left, use the right sprite and flip. Just use left if not.
+            spriteToSwitchTo = useFlippedRightForLeft ? rightSprite : leftSprite;
+            rendToUpdate.flipX = useFlippedRightForLeft;
         }
         else if (Mathf.Approximately(angleFromUp, 90))
         {
-            spriteToSwitchTo = rightSprite;
+            //If using flipped left for right, use the left sprite and flip. Just use right if not.
+            spriteToSwitchTo = useFlippedLeftForRight ? leftSprite : rightSprite;
+            rendToUpdate.flipX = useFlippedLeftForRight;
         }
         else
         {
