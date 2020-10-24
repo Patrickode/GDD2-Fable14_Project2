@@ -23,7 +23,7 @@ public class MovingEntity : MonoBehaviour, IMovable
             if (TileMoveController) { return TileMoveController.OnMove; }
             else
             {
-                if (targetFollower.Target)
+                if (targetFollower && targetFollower.Target)
                 {
                     TileMoveController = targetFollower.Target.GetComponent<TilemapMovementController>();
                     return TileMoveController.OnMove;
@@ -37,7 +37,7 @@ public class MovingEntity : MonoBehaviour, IMovable
             if (TileMoveController) { TileMoveController.OnMove = value; }
             else
             {
-                if (targetFollower.Target)
+                if (targetFollower && targetFollower.Target)
                 {
                     TileMoveController = targetFollower.Target.GetComponent<TilemapMovementController>();
                     TileMoveController.OnMove = value;
