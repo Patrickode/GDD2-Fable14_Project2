@@ -1,13 +1,18 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class MusicManager : MonoBehaviour
 {
     private AudioSource audioSource;
 
+    public GameObject musicManagerPrefab;
+
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        musicManagerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Managers/MusicPlayer.prefab");
     }
 
     public void ToggleMute()
