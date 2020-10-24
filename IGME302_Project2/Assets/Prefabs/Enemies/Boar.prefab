@@ -104,12 +104,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisEntity: {fileID: 839905723116205902}
   rendToUpdate: {fileID: 351535384283485872}
+  useFlippedRightForLeft: 1
+  useFlippedLeftForRight: 0
   upSprite: {fileID: -654261376722400943, guid: f4d17ba6fc84ded45b5a697297b32a9e,
     type: 3}
   downSprite: {fileID: 6417905619757885094, guid: f4d17ba6fc84ded45b5a697297b32a9e,
     type: 3}
-  leftSprite: {fileID: 4312683148901600363, guid: f4d17ba6fc84ded45b5a697297b32a9e,
-    type: 3}
+  leftSprite: {fileID: 0}
   rightSprite: {fileID: 4312683148901600363, guid: f4d17ba6fc84ded45b5a697297b32a9e,
     type: 3}
 --- !u!1 &6075130802272140608
