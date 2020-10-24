@@ -46,6 +46,36 @@ public class MovingEntity : MonoBehaviour, IMovable
         }
     }
 
+    public Action<Vector3, Vector3> OnTryMove
+    {
+        get
+        {
+            if (TileMoveController) { return TileMoveController.OnTryMove; }
+            else
+            {
+                if (targetFollower && targetFollower.Target)
+                {
+                    TileMoveController = targetFollower.Target.GetComponent<TilemapMovementController>();
+                    return TileMoveController.OnTryMove;
+                }
+            }
+
+            return null;
+        }
+        set
+        {
+            if (TileMoveController) { TileMoveController.OnTryMove = value; }
+            else
+            {
+                if (targetFollower && targetFollower.Target)
+                {
+                    TileMoveController = targetFollower.Target.GetComponent<TilemapMovementController>();
+                    TileMoveController.OnTryMove = value;
+                }
+            }
+        }
+    }
+
     protected virtual void Awake()
     {
         targetFollower = GetComponent<TargetFollower>();
