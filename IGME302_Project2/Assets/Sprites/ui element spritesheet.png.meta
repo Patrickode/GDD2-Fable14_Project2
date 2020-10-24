@@ -155,7 +155,7 @@ TextureImporter:
         width: 75
         height: 75
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -176,7 +176,7 @@ TextureImporter:
         width: 75
         height: 75
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -197,7 +197,7 @@ TextureImporter:
         width: 75
         height: 75
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -205,6 +205,27 @@ TextureImporter:
       bones: []
       spriteID: a7f8b45e21f239cb0800000000000000
       internalID: -4858487814799782022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui element spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 147
+        width: 534
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 46, y: 43, z: 46, w: 43}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80b3c8d7eabc27200800000000000000
+      internalID: 176427285711960840
       vertices: []
       indices: 
       edges: []
