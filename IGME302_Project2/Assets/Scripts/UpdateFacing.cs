@@ -14,7 +14,7 @@ public class UpdateFacing : MonoBehaviour
 
     private void Start()
     {
-        thisEntity.OnMove += UpdateFacingSprite;
+        thisEntity.OnTryMove += UpdateFacingSprite;
         if (thisEntity is Player)
         {
             Player.OnAbility += UpdateIfAimed;
@@ -22,7 +22,7 @@ public class UpdateFacing : MonoBehaviour
     }
     private void OnDestroy()
     {
-        thisEntity.OnMove -= UpdateFacingSprite;
+        thisEntity.OnTryMove -= UpdateFacingSprite;
         if (thisEntity is Player)
         {
             Player.OnAbility -= UpdateIfAimed;

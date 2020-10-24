@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 
 public class TilemapMovementController : MonoBehaviour, IMovable
 {
@@ -7,6 +8,10 @@ public class TilemapMovementController : MonoBehaviour, IMovable
 
     // Triggers every successful move
     public Action<Vector3, Vector3> OnMove;
+    //Triggers every attempted move, including failed moves
+    public Action<Vector3, Vector3> OnTryMove;
+
+    private Coroutine bumpCouroutine;
 
     // Returns whether the tile at position can be moved to
     public bool IsValidMove(Vector2 position)
@@ -42,11 +47,22 @@ public class TilemapMovementController : MonoBehaviour, IMovable
     public void Move(Vector2 displacement)
     {
         Vector3 newPosition = transform.position + (Vector3)displacement;
+        OnTryMove?.Invoke(transform.position, newPosition);
+
         if (IsValidMove(newPosition))
         {
+            //Stop bumping if bumping
+            if (bumpCouroutine != null) { StopCoroutine(bumpCouroutine); }
+
             Vector3 oldPosition = transform.position;
             transform.position = newPosition;
             OnMove?.Invoke(oldPosition, newPosition);
+        }
+        else
+        {
+            //Stop bumping if bumping, then start a new bump
+            if (bumpCouroutine != null) { StopCoroutine(bumpCouroutine); }
+            bumpCouroutine = StartCoroutine(BumpIntoCollider(displacement.normalized, 0.5f, 0.05f));
         }
     }
 
@@ -58,5 +74,15 @@ public class TilemapMovementController : MonoBehaviour, IMovable
     {
         if (IsValidMove(position))
             transform.position = position;
+    }
+
+    private IEnumerator BumpIntoCollider(Vector2 direction, float amount, float duration)
+    {
+        Vector2 displacementVect = direction * amount;
+        Vector2 originalPos = transform.position;
+
+        transform.position = originalPos + displacementVect;
+        yield return new WaitForSeconds(duration);
+        transform.position = originalPos;
     }
 }
