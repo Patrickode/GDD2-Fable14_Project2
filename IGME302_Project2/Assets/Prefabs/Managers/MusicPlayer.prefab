@@ -140,4 +140,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a0bdddbdd6f52d409238c35ea3d1fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicManagerPrefab: {fileID: 0}
+  musicManagerPrefab: {fileID: 4764861630063093541}

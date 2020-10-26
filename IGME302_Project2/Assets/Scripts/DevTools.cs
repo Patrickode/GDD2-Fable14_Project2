@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEditor;
 
 public class DevTools : MonoBehaviour
@@ -17,3 +18,4 @@ public class DevTools : MonoBehaviour
         newLevel.transform.parent = grid.transform;
     }
 }
+#endif

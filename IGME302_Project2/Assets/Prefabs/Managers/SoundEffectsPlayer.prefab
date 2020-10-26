@@ -140,4 +140,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af7c9b1d5eba2b4eb2ee3e3aa680001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEffectsManagerPrefab: {fileID: 0}
+  soundEffectsManagerPrefab: {fileID: 8699892997707203696}
