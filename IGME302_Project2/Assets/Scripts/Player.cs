@@ -25,7 +25,10 @@ public class Player : MovingEntity
     void OnEnable()
     {
         if (!aimingArrows) { Debug.LogWarning("Aiming arrows are not assigned to player."); }
+
         controls.Enable();
+        LevelManager.LoadLevelByPrefab += OnLevelLoading;
+        LevelManager.OnLoaded += OnLoadSuccess;
 
         if (logPosition)
         {
@@ -36,8 +39,14 @@ public class Player : MovingEntity
     void OnDisable()
     {
         controls.Disable();
+        LevelManager.LoadLevelByPrefab -= OnLevelLoading;
+        LevelManager.OnLoaded -= OnLoadSuccess;
+
         if (logPosition) { OnMove -= LogNewPosition; }
     }
+
+    private void OnLevelLoading(Level _) { canAct = false; }
+    private void OnLoadSuccess(Level _) { canAct = true; }
 
     protected override void Awake()
     {

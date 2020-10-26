@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ButtonMethods : MonoBehaviour
 {
@@ -30,15 +29,7 @@ public class ButtonMethods : MonoBehaviour
     /// scene (<paramref name="index"/> * -1) scenes ahead of the current scene.
     /// </summary>
     /// <param name="index"></param>
-    public void LoadSceneIndex(int index)
-    {
-        if (index < 0)
-        {
-            index = -index + SceneManager.GetActiveScene().buildIndex;
-        }
-
-        SceneManager.LoadScene(index);
-    }
+    public void LoadSceneIndex(int index) { TransitionLoader.TransitionLoad?.Invoke(index); }
 
     public void LoadLevelPrefab(Level levelToLoad) { LevelManager.LoadLevelByPrefab?.Invoke(levelToLoad); }
 
