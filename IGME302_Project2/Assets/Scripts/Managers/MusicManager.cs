@@ -12,7 +12,6 @@ public class MusicManager : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        musicManagerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Managers/MusicPlayer.prefab");
     }
 
     public void ToggleMute()

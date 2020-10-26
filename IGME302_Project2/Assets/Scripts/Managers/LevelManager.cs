@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
     private void OnLoadByPrefab(Level lvl)
     {
         if (lvl) { Load(lvl); }
-        else { Load(CurrentLevel.name); }
+        else { Load(CurrentLevel.gameObject); }
     }
 
     private void Start()
@@ -45,12 +45,9 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    // Loads a level with a string by finding it in the Prefab/Levels folder
-    public void Load(string levelName)
+    public void Load(GameObject levelObj)
     {
-        StartCoroutine(HandleLoadLogistics(
-            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Levels/" + levelName + ".prefab")
-        ));
+        StartCoroutine(HandleLoadLogistics(levelObj));
     }
 
     // Loads a level by directly sending a reference to its prefab

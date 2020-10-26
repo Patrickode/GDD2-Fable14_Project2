@@ -11,17 +11,11 @@ public class SoundEffectsManager : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        soundEffectsManagerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Managers/SoundEffectsPlayer.prefab");
     }
 
     void PlaySound(AudioClip sound)
     {
         audioSource.PlayOneShot(sound);
-    }
-
-    void PlaySound(string soundName)
-    {
-        audioSource.PlayOneShot(AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/SoundEffects/" + soundName));
     }
 
     public void ToggleMute()
