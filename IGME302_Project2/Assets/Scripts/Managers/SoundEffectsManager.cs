@@ -13,23 +13,31 @@ public class SoundEffectsManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        audioSource.mute = PlayerPrefs.GetInt("MuteSFX", 0) == 1;
+        audioSource.volume = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
+    }
+
     void PlaySound(AudioClip sound)
     {
         audioSource.PlayOneShot(sound);
     }
 
-    public void ToggleMute()
-    {
-        audioSource.mute = !audioSource.mute;
-    }
+    public void ToggleMute() { SetMute(!audioSource.mute); }
 
     public void SetMute(bool mute)
     {
         audioSource.mute = mute;
+
+        //If muted, store 1. Otherwise, store 0. (There is no SetBool in PlayerPrefs.)
+        PlayerPrefs.SetInt("MuteSFX", mute ? 1 : 0);
     }
 
     public void SetVolume(float volume)
     {
         audioSource.volume = volume;
+
+        PlayerPrefs.SetFloat("SFXVolume", volume);
     }
 }
