@@ -15363,21 +15363,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c49f5f6e30cb464e9a93b6b6b47d331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelName: 
-  description: '"The path here seems to be obstructed. Maybe there''s a way to clear
-    the brush to get through."'
+  levelName: Level 4
+  description: '"I can''t jump over this... There''s got to be a way to clear these
+    bushes."'
   floor: {fileID: 7762768331045984480}
   colliders: {fileID: 7762768332375790929}
   ceiling: {fileID: 7762768331576168521}
   enemies: []
   abilitySet:
+  - ability: {fileID: -5299013442601749254, guid: ffc1c4d96eb576c439f1f73810e6ddf1,
+      type: 3}
+    usages: 5
   - ability: {fileID: -5853552886931191550, guid: 913c1df0217ab9440b13dfdc1cc3c593,
       type: 3}
     usages: 5
-  - ability: {fileID: -5299013442601749254, guid: ffc1c4d96eb576c439f1f73810e6ddf1,
-      type: 3}
-    usages: 10
-  spawnPoint: {x: 0, y: 0}
+  spawnPoint: {x: -3, y: 0}
   goal: {x: 29, y: 11}
   nextLevel: {fileID: 0}
 --- !u!1 &7762768332375790892
