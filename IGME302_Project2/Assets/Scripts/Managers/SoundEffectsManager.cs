@@ -11,7 +11,12 @@ public class SoundEffectsManager : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        soundEffectsManagerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Managers/SoundEffectsPlayer.prefab");
+    }
+
+    private void Start()
+    {
+        audioSource.mute = PlayerPrefs.GetInt("MuteSFX", 0) == 1;
+        audioSource.volume = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
     }
 
     void PlaySound(AudioClip sound)
@@ -19,23 +24,20 @@ public class SoundEffectsManager : MonoBehaviour
         audioSource.PlayOneShot(sound);
     }
 
-    void PlaySound(string soundName)
-    {
-        audioSource.PlayOneShot(AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/SoundEffects/" + soundName));
-    }
-
-    public void ToggleMute()
-    {
-        audioSource.mute = !audioSource.mute;
-    }
+    public void ToggleMute() { SetMute(!audioSource.mute); }
 
     public void SetMute(bool mute)
     {
         audioSource.mute = mute;
+
+        //If muted, store 1. Otherwise, store 0. (There is no SetBool in PlayerPrefs.)
+        PlayerPrefs.SetInt("MuteSFX", mute ? 1 : 0);
     }
 
     public void SetVolume(float volume)
     {
         audioSource.volume = volume;
+
+        PlayerPrefs.SetFloat("SFXVolume", volume);
     }
 }

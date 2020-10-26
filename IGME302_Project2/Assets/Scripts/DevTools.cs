@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEditor;
 
 public class DevTools : MonoBehaviour
@@ -16,4 +17,12 @@ public class DevTools : MonoBehaviour
         Grid grid = GameObject.FindObjectOfType<Grid>();
         newLevel.transform.parent = grid.transform;
     }
+
+    [MenuItem("Dev Tools/Delete Player Prefs/Confirm")]
+    private static void DeletePlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+        Debug.Log("Prefs deleted.");
+    }
 }
+#endif

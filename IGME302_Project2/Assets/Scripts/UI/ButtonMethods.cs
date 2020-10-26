@@ -1,23 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ButtonMethods : MonoBehaviour
 {
     [Tooltip("The current active menu screen. Changes when menus are swapped. Assigned automatically when " +
         "needed if null.")]
     [SerializeField] private GameObject currentMenuScreen = null;
+    private GameObject defaultMenuScreen;
 
     private void Awake()
     {
+        if (currentMenuScreen) { defaultMenuScreen = currentMenuScreen; }
+
         TryInitCurrentMenuScreen();
 
-        PauseManager.PauseGame += SetCurrentMenuActive;
+        PauseManager.PauseGame += OnPauseGame;
     }
     private void OnDestroy()
     {
-        PauseManager.PauseGame -= SetCurrentMenuActive;
+        PauseManager.PauseGame -= OnPauseGame;
     }
 
     //--- Button Methods ---//
@@ -27,15 +29,7 @@ public class ButtonMethods : MonoBehaviour
     /// scene (<paramref name="index"/> * -1) scenes ahead of the current scene.
     /// </summary>
     /// <param name="index"></param>
-    public void LoadSceneIndex(int index)
-    {
-        if (index < 0)
-        {
-            index = -index + SceneManager.GetActiveScene().buildIndex;
-        }
-
-        SceneManager.LoadScene(index);
-    }
+    public void LoadSceneIndex(int index) { TransitionLoader.TransitionLoad?.Invoke(index); }
 
     public void LoadLevelPrefab(Level levelToLoad) { LevelManager.LoadLevelByPrefab?.Invoke(levelToLoad); }
 
@@ -67,6 +61,12 @@ public class ButtonMethods : MonoBehaviour
     }
 
     //--- Helper Methods ---//
+
+    private void OnPauseGame(bool paused)
+    {
+        SetCurrentMenuActive(paused);
+        currentMenuScreen = defaultMenuScreen;
+    }
 
     private void SetCurrentMenuActive(bool isActive) { SetMenuActive(isActive); }
     /// <summary>
