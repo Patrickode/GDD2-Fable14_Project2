@@ -2238,7 +2238,7 @@ MonoBehaviour:
   - {fileID: 5921800641187306127}
   - {fileID: 2376746100173162663}
   fadeInTime: 0.5
-  stayVisibleTime: 5
+  stayVisibleTime: 7.5
   fadeOutTime: 1
 --- !u!1 &6388364109143889672
 GameObject:
