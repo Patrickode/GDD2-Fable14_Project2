@@ -8,6 +8,8 @@ TagManager:
   - ColliderTilemap
   - CeilingTilemap
   - Target Container
+  - MenuScreen
+  - KillEnemy
   layers:
   - Default
   - TransparentFX

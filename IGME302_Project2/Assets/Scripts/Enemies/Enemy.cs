@@ -27,6 +27,9 @@ public class Enemy : MovingEntity
         }
     }
 
+    [Space(10)]
+    [SerializeField] private ParticleSystem deathEffect = null;
+
     private EnemyBehaviour[] behaviours;
 
     protected override void Awake()
@@ -71,6 +74,19 @@ public class Enemy : MovingEntity
 
     private void Die()
     {
+        deathEffect.transform.parent = null;
+        deathEffect.Play();
         Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) { DieIfHit(collision.gameObject); }
+    private void OnCollisionEnter2D(Collision2D collision) { DieIfHit(collision.gameObject); }
+    private void DieIfHit(GameObject collisionObj)
+    {
+        if (collisionObj.CompareTag("KillEnemy"))
+        {
+            Destroy(collisionObj);
+            OnDeath?.Invoke();
+        }
     }
 }

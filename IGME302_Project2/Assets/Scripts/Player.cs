@@ -8,11 +8,10 @@ public class Player : MovingEntity
 {
     [Space(10)]
     [SerializeField] private GameObject aimingArrows = null;
+    [SerializeField] private bool logPosition = false;
 
     private PlayerControls controls;
     private List<Ability> abilities;
-
-    public bool logPosition = false;
 
     private bool canAct = true;
     /// <summary>
@@ -26,15 +25,28 @@ public class Player : MovingEntity
     void OnEnable()
     {
         if (!aimingArrows) { Debug.LogWarning("Aiming arrows are not assigned to player."); }
-        controls.Enable();
 
-        OnMove += LogCurrentPosition;
+        controls.Enable();
+        LevelManager.LoadLevelByPrefab += OnLevelLoading;
+        LevelManager.OnLoaded += OnLoadSuccess;
+
+        if (logPosition)
+        {
+            LogNewPosition(Vector3.zero, transform.position);
+            OnMove += LogNewPosition;
+        }
     }
     void OnDisable()
     {
         controls.Disable();
-        OnMove -= LogCurrentPosition;
+        LevelManager.LoadLevelByPrefab -= OnLevelLoading;
+        LevelManager.OnLoaded -= OnLoadSuccess;
+
+        if (logPosition) { OnMove -= LogNewPosition; }
     }
+
+    private void OnLevelLoading(Level _) { canAct = false; }
+    private void OnLoadSuccess(Level _) { canAct = true; }
 
     protected override void Awake()
     {
@@ -78,10 +90,9 @@ public class Player : MovingEntity
         PauseManager.PauseGame -= paused => canAct = !paused;
     }
 
-    private void LogCurrentPosition(Vector3 oldPosition, Vector3 newPosition)
+    private void LogNewPosition(Vector3 _, Vector3 newPosition)
     {
-        if (logPosition)
-            Debug.Log($"({newPosition.x}, {newPosition.y})");
+        Debug.Log($"{gameObject.name} Position: ({newPosition.x}, {newPosition.y})");
     }
 
     /// <summary>
