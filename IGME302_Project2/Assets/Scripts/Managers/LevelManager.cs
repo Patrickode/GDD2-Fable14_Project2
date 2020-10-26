@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEditor;
+using System.Collections;
 
 public class LevelManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class LevelManager : MonoBehaviour
     /// Invoke to load a level by its prefab; if null, defaults to reloading the current level
     /// </summary>
     public static Action<Level> LoadLevelByPrefab;
+
+    private bool firstLoad = true;
 
     private void Awake()
     {
@@ -31,7 +34,11 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        if (startLevel) { Load(startLevel); }
+        if (startLevel)
+        {
+            Load(startLevel);
+            firstLoad = false;
+        }
         else
         {
             Debug.LogError("LevelManager: No start level was assigned. The game needs a level to start with.");
@@ -41,19 +48,27 @@ public class LevelManager : MonoBehaviour
     // Loads a level with a string by finding it in the Prefab/Levels folder
     public void Load(string levelName)
     {
-        HandleLoadLogistics(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Levels/" + levelName + ".prefab"));
+        StartCoroutine(HandleLoadLogistics(
+            AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Levels/" + levelName + ".prefab")
+        ));
     }
 
     // Loads a level by directly sending a reference to its prefab
     public void Load(Level level)
     {
-        HandleLoadLogistics(level.gameObject);
+        StartCoroutine(HandleLoadLogistics(level.gameObject));
     }
 
     // Helper method to not repeat loading logistics in every Load overload
     // InstantiatesLoads the level asked, updates the CurrentLevel variable, and invokes the OnLoaded event
-    private void HandleLoadLogistics(GameObject levelPrefab)
+    private IEnumerator HandleLoadLogistics(GameObject levelPrefab)
     {
+        if (!firstLoad)
+        {
+            TransitionLoader.TransitionInOut?.Invoke();
+            yield return new WaitForSecondsRealtime(TransitionLoader.OutLength);
+        }
+
         // Instantiate level prefab
         GameObject loadedLevelObject = Instantiate(levelPrefab);
         loadedLevelObject.name = levelPrefab.name;

@@ -25,15 +25,19 @@ public class TurnManager : MonoBehaviour
     {
         LevelManager.OnLoaded += ResetTurns;
         player.OnMove += IncreaseTurn;
+        Player.OnAbility += IncreaseTurn;
     }
 
     private void OnDisable()
     {
         LevelManager.OnLoaded -= ResetTurns;
         player.OnMove -= IncreaseTurn;
+        Player.OnAbility -= IncreaseTurn;
     }
 
-    private void IncreaseTurn(Vector3 oldPosition, Vector3 newPosition)
+    private void IncreaseTurn(Vector3 a, Vector3 b) { IncreaseTurn(); }
+    private void IncreaseTurn(Ability a, int b) { IncreaseTurn(); }
+    private void IncreaseTurn()
     {
         turnCount++;
         OnTurnEnd?.Invoke();
