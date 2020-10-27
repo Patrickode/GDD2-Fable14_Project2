@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 3908099403952027938}
   - component: {fileID: 6037192445929093525}
   m_Layer: 0
-  m_Name: level_3 1
+  m_Name: level_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -310,7 +310,7 @@ MonoBehaviour:
   - ability: {fileID: -5299013442601749254, guid: ffc1c4d96eb576c439f1f73810e6ddf1,
       type: 3}
     usages: 5
-  spawnPoint: {x: -3, y: -1}
+  spawnPoint: {x: -2, y: -1}
   goal: {x: 28, y: 0}
   nextLevel: {fileID: 503334004186107143, guid: 7386c0d4628e3a5428bfee677d9c8623,
     type: 3}

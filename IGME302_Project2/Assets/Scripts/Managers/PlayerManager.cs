@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -18,14 +17,17 @@ public class PlayerManager : MonoBehaviour
             levelManager = FindObjectOfType<LevelManager>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         LevelManager.OnLoaded += InitPlayer;
         player.OnMove += CheckLevelGoalReached;
         player.OnDeath += ReloadCurrentLevel;
+
+        //Init player on start in case the level loads before InitPlayer can subscribe to OnLoaded.
+        if (LevelManager.CurrentLevel) { InitPlayer(LevelManager.CurrentLevel); }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         LevelManager.OnLoaded -= InitPlayer;
         player.OnMove -= CheckLevelGoalReached;
@@ -42,7 +44,7 @@ public class PlayerManager : MonoBehaviour
 
     private void CheckLevelGoalReached(Vector3 oldPosition, Vector3 newPosition)
     {
-        if (newPosition.ToVector2().ToVector2Int() == LevelManager.CurrentLevel.goal)
+        if (Vector3.Distance(newPosition, (Vector2)LevelManager.CurrentLevel.goal) < 0.6f)
         {
             Level nextLevel = LevelManager.CurrentLevel.nextLevel;
             if (nextLevel)
@@ -51,7 +53,8 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                //Load the next level in the build index.
+                TransitionLoader.TransitionLoad?.Invoke(-1);
             }
         }
     }

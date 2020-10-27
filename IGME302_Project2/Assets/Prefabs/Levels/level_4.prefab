@@ -15258,8 +15258,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelName: Level 4
-  description: '"I can''t jump over this... There''s got to be a way to clear these
-    bushes."'
+  description: '"I can''t jump over this... I''ll have to find a way to get rid of
+    some of these bushes."'
   floor: {fileID: 3025429373302272769}
   colliders: {fileID: 7178220490624619796}
   ceiling: {fileID: 468943788171635535}
@@ -15271,7 +15271,7 @@ MonoBehaviour:
   - ability: {fileID: -5853552886931191550, guid: 913c1df0217ab9440b13dfdc1cc3c593,
       type: 3}
     usages: 5
-  spawnPoint: {x: 28, y: -5}
+  spawnPoint: {x: 29, y: -5}
   goal: {x: 29, y: 11}
   nextLevel: {fileID: 0}
 --- !u!1 &3907790656718712807
