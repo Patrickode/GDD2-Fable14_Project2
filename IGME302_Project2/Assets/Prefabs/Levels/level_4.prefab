@@ -15258,8 +15258,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelName: Level 4
-  description: '"I can''t jump over this... There''s got to be a way to clear these
-    bushes."'
+  description: '"I can''t jump over this... I''ll have to find a way to get rid of
+    some of these bushes."'
   floor: {fileID: 3025429373302272769}
   colliders: {fileID: 7178220490624619796}
   ceiling: {fileID: 468943788171635535}
