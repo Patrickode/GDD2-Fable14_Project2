@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Level startLevel = null;
 
     public static Level CurrentLevel { get; private set; }
+    public static Vector3 GridOffset { get; private set; }
 
     public static Action<Level> OnLoaded;
 
@@ -20,6 +21,8 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+        GridOffset = transform.position;
+
         LoadLevelByPrefab += OnLoadByPrefab;
     }
     private void OnDestroy()

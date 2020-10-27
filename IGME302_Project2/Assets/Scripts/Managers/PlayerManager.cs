@@ -42,7 +42,7 @@ public class PlayerManager : MonoBehaviour
 
     private void CheckLevelGoalReached(Vector3 oldPosition, Vector3 newPosition)
     {
-        if (newPosition.ToVector2().ToVector2Int() == LevelManager.CurrentLevel.goal)
+        if (Vector3.Distance(newPosition, (Vector2)LevelManager.CurrentLevel.goal) < 0.6f)
         {
             Level nextLevel = LevelManager.CurrentLevel.nextLevel;
             if (nextLevel)
