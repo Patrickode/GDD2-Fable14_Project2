@@ -22,6 +22,9 @@ public class Player : MovingEntity
     public static Action<Ability, int> OnAbility;
     public Action OnDeath;
 
+    private PlayerSoundManager playerSoundManager;
+    private SoundEffectsManager soundEffectsManager;
+
     void OnEnable()
     {
         if (!aimingArrows) { Debug.LogWarning("Aiming arrows are not assigned to player."); }
@@ -51,6 +54,9 @@ public class Player : MovingEntity
     protected override void Awake()
     {
         base.Awake();
+
+        playerSoundManager = GetComponent<PlayerSoundManager>();
+        soundEffectsManager = FindObjectOfType<SoundEffectsManager>();
 
         controls = new PlayerControls();
         abilities = new List<Ability>();
@@ -140,6 +146,7 @@ public class Player : MovingEntity
             //...and this ability is aimable, start aiming this ability.
             if (abilityToActivate.isAimable)
             {
+                soundEffectsManager.PlaySound(playerSoundManager.aimOnSound);
                 if (aimingArrows) { aimingArrows.SetActive(true); }
                 aimingAbilityIndex = indexToActivate;
             }
@@ -153,6 +160,7 @@ public class Player : MovingEntity
         //If we are aiming an ability, cancel aiming.
         else
         {
+            soundEffectsManager.PlaySound(playerSoundManager.aimOffSound);
             if (aimingArrows) { aimingArrows.SetActive(false); }
             aimingAbilityIndex = -1;
         }

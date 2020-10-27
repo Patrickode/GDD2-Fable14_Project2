@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
+    private SoundEffectsManager soundEffectsManager;
+
+    [SerializeField] private AudioClip togglePauseSound;
+
     /// <summary>
     /// Action to set the pause state of the game.
     /// </summary>
@@ -18,6 +22,8 @@ public class PauseManager : MonoBehaviour
 
     private void Awake()
     {
+        soundEffectsManager = FindObjectOfType<SoundEffectsManager>();
+
         PauseGame += OnGamePaused;
         TogglePause += OnTogglePaused;
         LevelManager.OnLoaded += _ => PauseGame?.Invoke(false);
@@ -30,7 +36,10 @@ public class PauseManager : MonoBehaviour
         LevelManager.OnLoaded -= _ => PauseGame?.Invoke(false);
     }
 
-    private void OnTogglePaused() { PauseGame?.Invoke(!isPaused); }
+    private void OnTogglePaused() {
+        soundEffectsManager.PlaySound(togglePauseSound);
+        PauseGame?.Invoke(!isPaused);
+    }
     private void OnGamePaused(bool paused)
     {
         //No need to do anything here if the game is already in the state we want it in.

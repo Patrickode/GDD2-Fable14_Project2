@@ -5019,6 +5019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMenuScreen: {fileID: 8651135166853204983}
+  buttonClickSound: {fileID: 8300000, guid: 246d996f7faaf9541bb73add36543f52, type: 3}
 --- !u!114 &3408531894581182122
 MonoBehaviour:
   m_ObjectHideFlags: 0

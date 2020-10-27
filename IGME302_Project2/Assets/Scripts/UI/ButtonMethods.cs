@@ -9,11 +9,17 @@ public class ButtonMethods : MonoBehaviour
     [SerializeField] private GameObject currentMenuScreen = null;
     private GameObject defaultMenuScreen;
 
+    [SerializeField] private AudioClip buttonClickSound;
+
+    private SoundEffectsManager soundEffectsManager;
+
     private void Awake()
     {
         if (currentMenuScreen) { defaultMenuScreen = currentMenuScreen; }
 
         TryInitCurrentMenuScreen();
+
+        soundEffectsManager = FindObjectOfType<SoundEffectsManager>();
 
         PauseManager.PauseGame += OnPauseGame;
     }
@@ -138,5 +144,12 @@ public class ButtonMethods : MonoBehaviour
 
         //If we made it this far, currentMenu is already assigned, or no active menu was found.
         return false;
+    }
+
+    // calculatorClick.wav by MAbdurrahman at freesound.org
+    // https://freesound.org/people/MAbdurrahman/sounds/425187/
+    public void PlayClickSound()
+    {
+        soundEffectsManager.PlaySound(buttonClickSound);
     }
 }

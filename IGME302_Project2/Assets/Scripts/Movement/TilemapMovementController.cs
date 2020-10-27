@@ -12,6 +12,14 @@ public class TilemapMovementController : MonoBehaviour, IMovable
     public Action<Vector3, Vector3> OnTryMove;
 
     private Coroutine bumpCouroutine;
+    public AudioClip bumpSound;
+
+    private SoundEffectsManager soundEffectsManager;
+
+    private void Awake()
+    {
+        soundEffectsManager = FindObjectOfType<SoundEffectsManager>();
+    }
 
     // Returns whether the tile at position can be moved to
     public bool IsValidMove(Vector2 position)
@@ -78,6 +86,8 @@ public class TilemapMovementController : MonoBehaviour, IMovable
 
     private IEnumerator BumpIntoCollider(Vector2 direction, float amount, float duration)
     {
+        if (bumpSound)
+            soundEffectsManager.PlaySound(bumpSound);
         Vector2 displacementVect = direction * amount;
         Vector2 originalPos = transform.position;
 
