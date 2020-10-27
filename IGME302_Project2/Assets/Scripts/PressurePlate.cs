@@ -11,7 +11,7 @@ public class PressurePlate : MonoBehaviour
     private List<LevelEffect> levelEffects;
 
     [SerializeField]
-    private AudioClip activateSound;
+    private AudioClip activateSound = null;
 
     private SoundEffectsManager soundEffectsManager;
 

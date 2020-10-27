@@ -7,15 +7,15 @@ public class PlayerSoundManager : MonoBehaviour
     private Player player;
 
     [SerializeField]
-    private AudioClip walkSound;
+    private AudioClip walkSound = null;
     [SerializeField]
-    private AudioClip bowShootSound;
+    private AudioClip bowShootSound = null;
     [SerializeField]
-    private AudioClip leapAbilitySound;
+    private AudioClip leapAbilitySound = null;
     [SerializeField]
-    private AudioClip bumpSound;
+    private AudioClip bumpSound = null;
     [SerializeField]
-    private AudioClip deathSound;
+    private AudioClip deathSound = null;
 
     public AudioClip aimOnSound;
     public AudioClip aimOffSound;

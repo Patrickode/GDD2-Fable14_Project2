@@ -532,3 +532,5 @@ MonoBehaviour:
   transitionAnimator: {fileID: 123892262970723368}
   outClip: {fileID: 7400000, guid: 7c08ed9333671e44cbfedd6f925e84d8, type: 2}
   clipDurationOffset: -0.01
+  sfxManager: {fileID: 0}
+  transitionSound: {fileID: 8300000, guid: 059842dab26a0224a87269374480e39b, type: 3}

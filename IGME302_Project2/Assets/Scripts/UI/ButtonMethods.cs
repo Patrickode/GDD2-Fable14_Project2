@@ -7,9 +7,9 @@ public class ButtonMethods : MonoBehaviour
     [Tooltip("The current active menu screen. Changes when menus are swapped. Assigned automatically when " +
         "needed if null.")]
     [SerializeField] private GameObject currentMenuScreen = null;
-    private GameObject defaultMenuScreen;
+    [SerializeField] private AudioClip buttonClickSound = null;
 
-    [SerializeField] private AudioClip buttonClickSound;
+    private GameObject defaultMenuScreen;
 
     private SoundEffectsManager soundEffectsManager;
 
