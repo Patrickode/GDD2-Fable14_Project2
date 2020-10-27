@@ -104,7 +104,7 @@ MonoBehaviour:
   bowShootSound: {fileID: 8300000, guid: 28de3f72b771de3489774d8efeefaa9d, type: 3}
   leapAbilitySound: {fileID: 8300000, guid: 5b09127bf5c8a744ca12c601a047dc26, type: 3}
   bumpSound: {fileID: 8300000, guid: 5312d80290a61b1459fbe91e8937674c, type: 3}
-  deathSound: {fileID: 8300000, guid: 9d016cb571521df4183bc0400e9fdbf6, type: 3}
+  deathSound: {fileID: 8300000, guid: 4581d2619df2a504ca8caf7ace0652c0, type: 3}
   aimOnSound: {fileID: 8300000, guid: ae4347fa02903a741a560bb4f5637278, type: 3}
   aimOffSound: {fileID: 8300000, guid: fda6fdd9ca52f5945972bb001758f105, type: 3}
 --- !u!1 &8602118540317496289

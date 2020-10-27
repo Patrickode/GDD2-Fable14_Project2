@@ -1143,7 +1143,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   levelManager: {fileID: 0}
-  levelClearedSound: {fileID: 8300000, guid: 059842dab26a0224a87269374480e39b, type: 3}
 --- !u!1 &1217886586
 GameObject:
   m_ObjectHideFlags: 0
