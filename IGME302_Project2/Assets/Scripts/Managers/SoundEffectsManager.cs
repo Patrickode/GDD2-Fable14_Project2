@@ -19,9 +19,10 @@ public class SoundEffectsManager : MonoBehaviour
         audioSource.volume = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
     }
 
-    void PlaySound(AudioClip sound)
+    public void PlaySound(AudioClip sound)
     {
-        audioSource.PlayOneShot(sound);
+        if (audioSource)
+            audioSource.PlayOneShot(sound);
     }
 
     public void ToggleMute() { SetMute(!audioSource.mute); }

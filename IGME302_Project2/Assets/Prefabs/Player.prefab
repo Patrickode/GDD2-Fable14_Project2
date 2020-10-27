@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8602118540230160389}
   - component: {fileID: 8602118540230160388}
   - component: {fileID: 2217864528816258444}
+  - component: {fileID: 6870884529662471965}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimingArrows: {fileID: 5521313363344121461}
+  logPosition: 0
 --- !u!114 &8602118540230160388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +78,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisEntity: {fileID: 8602118540230160389}
   rendToUpdate: {fileID: 8602118540317496291}
+  useFlippedRightForLeft: 0
+  useFlippedLeftForRight: 0
   upSprite: {fileID: -874542547975271707, guid: f4d17ba6fc84ded45b5a697297b32a9e,
     type: 3}
   downSprite: {fileID: 6821678379667169303, guid: f4d17ba6fc84ded45b5a697297b32a9e,
@@ -84,6 +88,25 @@ MonoBehaviour:
     type: 3}
   rightSprite: {fileID: 1993045023949188193, guid: f4d17ba6fc84ded45b5a697297b32a9e,
     type: 3}
+--- !u!114 &6870884529662471965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8602118540230160387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47e0f875bcd533a4c8c83e31e5fa1be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSound: {fileID: 8300000, guid: 6497a71a767998a44a7db61fa8648906, type: 3}
+  bowShootSound: {fileID: 8300000, guid: 28de3f72b771de3489774d8efeefaa9d, type: 3}
+  leapAbilitySound: {fileID: 8300000, guid: 5b09127bf5c8a744ca12c601a047dc26, type: 3}
+  bumpSound: {fileID: 8300000, guid: 5312d80290a61b1459fbe91e8937674c, type: 3}
+  deathSound: {fileID: 8300000, guid: 9d016cb571521df4183bc0400e9fdbf6, type: 3}
+  aimOnSound: {fileID: 8300000, guid: ae4347fa02903a741a560bb4f5637278, type: 3}
+  aimOffSound: {fileID: 8300000, guid: fda6fdd9ca52f5945972bb001758f105, type: 3}
 --- !u!1 &8602118540317496289
 GameObject:
   m_ObjectHideFlags: 0
