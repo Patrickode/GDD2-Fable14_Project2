@@ -8,11 +8,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private LevelManager levelManager;
 
-    [SerializeField]
-    private AudioClip levelClearedSound;
-
-    private SoundEffectsManager soundEffectsManager;
-
     void Awake()
     {
         // Automatically set fields
@@ -20,8 +15,6 @@ public class PlayerManager : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         if (!levelManager)
             levelManager = FindObjectOfType<LevelManager>();
-
-        soundEffectsManager = FindObjectOfType<SoundEffectsManager>();
     }
 
     private void Start()
@@ -56,9 +49,6 @@ public class PlayerManager : MonoBehaviour
             Level nextLevel = LevelManager.CurrentLevel.nextLevel;
             if (nextLevel)
             {
-                // rustle.m4a by sonic7832 at freesound.org
-                // https://freesound.org/people/sonic7832/sounds/488688/
-                soundEffectsManager.PlaySound(levelClearedSound);
                 levelManager.Load(nextLevel);
             }
             else

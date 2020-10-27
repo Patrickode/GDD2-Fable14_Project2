@@ -7,7 +7,7 @@ public class PauseManager : MonoBehaviour
 {
     private SoundEffectsManager soundEffectsManager;
 
-    [SerializeField] private AudioClip togglePauseSound;
+    [SerializeField] private AudioClip togglePauseSound = null;
 
     /// <summary>
     /// Action to set the pause state of the game.
@@ -36,7 +36,8 @@ public class PauseManager : MonoBehaviour
         LevelManager.OnLoaded -= _ => PauseGame?.Invoke(false);
     }
 
-    private void OnTogglePaused() {
+    private void OnTogglePaused()
+    {
         soundEffectsManager.PlaySound(togglePauseSound);
         PauseGame?.Invoke(!isPaused);
     }
