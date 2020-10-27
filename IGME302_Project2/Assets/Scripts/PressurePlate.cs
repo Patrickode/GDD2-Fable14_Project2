@@ -30,7 +30,7 @@ public class PressurePlate : MonoBehaviour
 
     private void CheckPlayerOnPlate(Vector3 oldPosition, Vector3 newPosition)
     {
-        if (newPosition == transform.position)
+        if (Vector3.Distance(transform.position + LevelManager.GridOffset, newPosition) < 0.6f)
             OnActivated?.Invoke();
     }
 
