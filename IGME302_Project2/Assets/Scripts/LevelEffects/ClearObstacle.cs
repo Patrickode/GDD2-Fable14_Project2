@@ -6,11 +6,16 @@ public class ClearObstacle : LevelEffect
 {
     [SerializeField]
     private List<Vector2Int> colliderPositions = new List<Vector2Int>();
+    [SerializeField]
+    private SpriteRenderer spriteRend = null;
+    [SerializeField]
+    private Sprite activateSprite = null;
 
     private Tilemap Colliders => LevelManager.CurrentLevel.colliders;
 
     public override void ActivateEffect()
     {
+        if (activateSprite) { spriteRend.sprite = activateSprite; }
         RemoveColliders();
     }
 
