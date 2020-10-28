@@ -21,14 +21,14 @@ public class TurnManager : MonoBehaviour
 
     }
 
-    private void OnEnable()
+    private void Start()
     {
         LevelManager.OnLoaded += ResetTurns;
         player.OnMove += IncreaseTurn;
         Player.OnAbility += IncreaseTurn;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         LevelManager.OnLoaded -= ResetTurns;
         player.OnMove -= IncreaseTurn;
