@@ -36,7 +36,7 @@ public class FollowPlayer : EnemyBehaviour
     {
         if (pathToPlayer != null && pathToPlayer.Count > 0 && DistanceToPlayer > 1)
         {
-            //// Debug: Print out path listed
+            // Debug: Print out path listed
             //string debugString = "\nClick To Expand\n";
             //foreach (Vertex vertex in pathToPlayer)
             //{
@@ -74,28 +74,34 @@ public class FollowPlayer : EnemyBehaviour
                 Vector3Int currentPosition = new Vector3Int(x, y, 0);
 
                 // Collider has tiles offset at y by 1, use this to check with HasTile()
-                Vector3Int currentPositionShifted = new Vector3Int(currentPosition.x, currentPosition.y - 1, currentPosition.z);
-                if (colliders.HasTile(currentPositionShifted) || EnemyAt(currentPosition))
+                Vector3Int currentPositionShifted = new Vector3Int(currentPosition.x - 1, currentPosition.y - 1, currentPosition.z);
+
+                // A z other than 0 will make the tile unwalkable on the A* algorithm
+                if (colliders.HasTile(currentPositionShifted))
                 {
-                    // A z other than 0 will make the tile unwalkable on the A* algorithm
                     currentPosition.z = 1;
+                }
+                else if (EnemyAt(currentPosition))
+                {
+                    currentPosition.z = 2;
                 }
 
                 walkableTiles[j, i] = currentPosition;
             }
         }
 
-        //// Debug: Map of walkable tiles
-        //string debugString = "\nClick To Expand\n";
-        //for (int i = 0; i <= walkableTiles.GetUpperBound(1); i++)
-        //{
-        //    for (int j = 0; j <= walkableTiles.GetUpperBound(0); j++)
-        //    {
-        //        debugString += $"{walkableTiles[j, i].z} ";
-        //    }
-        //    debugString += "\n ";
-        //}
-        //Debug.Log(debugString);
+        // Debug: Map of walkable tiles
+        string debugString = "\nClick To Expand\n";
+        for (int i = 0; i <= walkableTiles.GetUpperBound(1); i++)
+        {
+            for (int j = 0; j <= walkableTiles.GetUpperBound(0); j++)
+            {
+                    // 0 means walkable, anything else means unwalkable
+                    debugString += $"{walkableTiles[j, i].z} ";
+            }
+            debugString += "\n";
+        }
+        Debug.Log(debugString);
 
         return walkableTiles;
     }
